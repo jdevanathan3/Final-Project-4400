@@ -6,15 +6,15 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class LoginController extends Controller
+class MainMenuController extends Controller
 {
     /**
-     * @Route("/login")
+     * @Route("/mainMenu")
      */
     public function numberAction()
     {
         $html = $this->container->get('templating')->render(
-            'login.html.twig',
+            'mainMenu.html.twig',
             array('luckyNumberList' => 1)
         );
 
