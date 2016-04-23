@@ -13,7 +13,7 @@
                     <h3 class="panel-title">Register</h3>
                 </div>
                 <div class="panel-body">
-                    <form action="register" method="post" novalidate>
+                    <form action="/register" method="post" novalidate>
                         <div class="form-group{% if USERNAME_EMPTY is defined or USERNAME_TAKEN is defined%} has-error{% endif %}">
                             <input type="text" class="form-control" name="input_username" id="input_username" placeholder="username" {% if prev_username is defined %}value="{{ prev_username }}"{% endif %}>
                             {% if USERNAME_EMPTY is defined %}<span id="helpBlock1" class="help-block">Username is empty. Please enter a Username</span>{% endif %}
