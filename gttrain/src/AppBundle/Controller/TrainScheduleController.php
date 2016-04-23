@@ -20,6 +20,19 @@ class TrainScheduleController extends Controller
 
         return new Response($html);
     }
+    
+    /**
+     * @Route("/trainScheduleSearch")
+     */
+    public function showSearch()
+    {
+        $html = $this->container->get('templating')->render(
+            'viewTrainScheduleSearch.html.twig',
+            array('luckyNumberList' => 1)
+        );
+
+        return new Response($html);
+    }
 }
 
 ?>
