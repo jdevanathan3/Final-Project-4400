@@ -109,6 +109,24 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::indexAction',  '_route' => 'homepage',);
         }
 
+        if (0 === strpos($pathinfo, '/l')) {
+            // app_login_number
+            if ($pathinfo === '/login') {
+                return array (  '_controller' => 'AppBundle\\Controller\\LoginController::numberAction',  '_route' => 'app_login_number',);
+            }
+
+            // app_lucky_number
+            if ($pathinfo === '/lucky/number') {
+                return array (  '_controller' => 'AppBundle\\Controller\\LuckyController::numberAction',  '_route' => 'app_lucky_number',);
+            }
+
+        }
+
+        // app_registration_number
+        if ($pathinfo === '/registration') {
+            return array (  '_controller' => 'AppBundle\\Controller\\RegistrationController::numberAction',  '_route' => 'app_registration_number',);
+        }
+
         throw 0 < count($allow) ? new MethodNotAllowedException(array_unique($allow)) : new ResourceNotFoundException();
     }
 }

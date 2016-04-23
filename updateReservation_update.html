@@ -5,7 +5,6 @@
          <table stBackyla="width:100%">
          <form>		 
 	  <tr>
-            <th>Select 
 	    <th>Train(Train Number)
 	    <th>Time(Duration)
 	    <th>Departs From
@@ -37,9 +36,23 @@
 	    <td>50</td>
 	  </tr>
 	</table>
-	<button type = "button" onclick="location.href='updateReservation_search.html';">
+	 New Departure Date:<input type="text" name="departDate">
+	 <input type="submit" value="Search Availability">
+	 <!--Need to add new table here using PHP if there are availabilities.-->
+
+         <table stBackyla="width:100%">
+	  <tr>
+	    <th>Train(Train Number)
+	    <th>Time(Duration)
+	    <th>Departs From
+	    <th>Arrives At
+	    <th>Class
+	    <th>Price
+	    <th>#of Baggages
+	    <th>Passenger Name
+        </table>
+	<button type = "button" onclick="location.href='updateReservation_select.html';">
 	Back</button>
-	<button type = "button" onclick="location.href='updateReservation_update.html';">
-	Next</button>
+	<input type = "submit" value="Submit">
          </form>
 <body>
