@@ -17,6 +17,7 @@ class SearchTrainController extends Controller
      */
     public function show()
     {
+
 		$stations = $this->db_getStations();
         $html = $this->container->get('templating')->render(
             'searchTrain.html.twig',
