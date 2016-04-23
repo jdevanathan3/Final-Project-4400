@@ -1,0 +1,21 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Popular Route Report
+{% endblock %}
+
+{% block content %}
+ <h1>View Popular Route Report</h1>
+	<p>
+		<table style="width:100%">
+		  <tr>
+			<td>Month</td>
+			<td>Train Number</td> 
+			<td># of Reservations</td>
+		  </tr>
+		</table>
+	</p>
+
+    <a href = "managerChooseFunctionality.html.twig">Back</a>
+{% endblock %}

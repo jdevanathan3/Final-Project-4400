@@ -1,0 +1,33 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Give Review
+{% endblock %}
+
+{% block content %}
+<h1>Give Review</h1>
+	
+	<p>		
+		<form>
+		  Train Number:<br>
+		  <input type="text" name="trainNumberReview"><br>
+		  Rating:
+			<select>
+				<option value="vgood">Very Good</option>
+				<option value="good">Good</option>
+				<option value="neutral">Neutral</option>
+				<option value="bad">Bad</option>
+				<option value="vbad">Very Bad</option>
+			</select> 
+		  Comment:<br>
+		  <input type="text" name="commentReview"><br>
+		</form>
+	</p>
+	<a href = "???">Submit</a>
+<br>
+<br>
+	
+    <a href = "mainMenu.html.twig">Back</a>
+	
+{% endblock %}

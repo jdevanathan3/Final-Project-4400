@@ -1,0 +1,22 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Add School Info
+{% endblock %}
+
+{% block content %}
+<h1>Add School Info</h1>
+	
+		<form>
+		  School Email Address:
+		  <input type="text" name="schoolEmailID"><br>
+		</form>
+
+	<font size="1.5">Your school email address ends with .edu</font>
+	<a href = "???">Submit</a>
+<br>
+<br>
+    <a href = "mainMenu.html.twig">Back</a>
+	
+{% endblock %}

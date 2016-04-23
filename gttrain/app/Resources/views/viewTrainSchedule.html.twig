@@ -2,21 +2,22 @@
 {% extends 'base.loggedIn.html.twig' %}
 
 {% block title %}
-    Select Departure
+     View Train Schedule
 {% endblock %}
 
 {% block content %}
-         <h1>Select Departure</h1>
+	<h1>View Train Schedule</h1>
 	<p>
 		<table style="width:100%">
 		  <tr>
 			<td>Train (Train Number)</td>
-			<td>Time (Duration)</td> 
-			<td>1st Class Price</td>
-			<td>2nd Class Price</td>
+			<td>Arrival Time</td>
+			<td>Departure Time</td>
+			<td>Station</td>
 		  </tr>
 		</table>
 	</p>
-    <a href = "searchTrain.html.twig">Back</a>
-	<a href = "baggage.html.twig">Next</a>
+	
+    <a href = "viewTrainScheduleSearch.html.twig">Back</a>
+
 {% endblock %}
