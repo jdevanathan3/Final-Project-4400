@@ -1,5 +1,11 @@
-<!DOCTYPE html>
-<body>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Confirmation
+{% endblock %}
+
+{% block content %}
          <h1>Confirmation</h1>
 	<p>
 		Reservation ID:
@@ -10,5 +16,4 @@
 	
     <a href = "mainMenu.html">Go Back to Choose Functionality</a>
 
-</body>
-
+{% endblock %}

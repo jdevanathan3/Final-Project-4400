@@ -1,6 +1,12 @@
-<!DOCTYPE html>
-<body>
-         <h1>Payment Information</h1>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Payment Info
+{% endblock %}
+
+{% block content %}
+   <h1>Payment Information</h1>
 
 	<br>
 	<h3>Add Card</h3>
@@ -32,5 +38,4 @@
 	</p>
 
 	<a href = "makeReservation.html">Submit</a>
-</body>
-
+{% endblock %}

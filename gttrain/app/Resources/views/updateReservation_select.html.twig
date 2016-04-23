@@ -1,6 +1,12 @@
-<!DOCTYPE html>
-<body>
-         <h1>Update Reservation</h1>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Update Reservation Select
+{% endblock %}
+
+{% block content %}
+ <h1>Update Reservation</h1>
 
          <table stBackyla="width:100%">
          <form>		 
@@ -42,4 +48,4 @@
 	<button type = "button" onclick="location.href='updateReservation_update.html';">
 	Next</button>
          </form>
-<body>
+{% endblock %}

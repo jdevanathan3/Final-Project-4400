@@ -1,9 +1,15 @@
-<!DOCTYPE html>
-<body>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Update Reservation Search
+{% endblock %}
+
+{% block content %}
          <h1>Update Reservation</h1>
 	 Reservation ID:<input type="text" name="fname">
 	 <input type = "submit" value="Search"> <br>
          <input type = "submit" value="Back">
 	 <button type = "button" onclick="location.href='updateReservation_select.html';">
 	Next</button>
-</body>
+{% endblock %}

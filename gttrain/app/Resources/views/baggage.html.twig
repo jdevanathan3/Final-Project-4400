@@ -1,6 +1,12 @@
-<!DOCTYPE html>
-<body>
-         <h1>Travel Extras & Passenger Info</h1>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Travel Extras
+{% endblock %}
+
+{% block content %}
+<h1>Travel Extras & Passenger Info</h1>
 	<p>
 		Number of Baggage:
 		<select>
@@ -21,5 +27,4 @@
 	
     <a href = "selectDeparture.html">Back</a>
 	<a href = "makeReservation.html">Next</a>
-</body>
-
+{% endblock %}

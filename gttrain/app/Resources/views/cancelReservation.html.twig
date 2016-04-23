@@ -1,6 +1,12 @@
-<!DOCTYPE html>
-<body>
-         <h1>Make Reservation</h1>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Cancel Reservation
+{% endblock %}
+
+{% block content %}
+     <h1>Make Reservation</h1>
 	<p>
 		<table style="width:100%">
 		  <tr>
@@ -26,4 +32,4 @@
 	
     <a href = "cancelReservationSearch.html">Back</a>
 	<a href = "mainMenu.html">Submit</a>
-</body>
+{% endblock %}

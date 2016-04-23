@@ -1,5 +1,11 @@
-<!DOCTYPE html>
-<body>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Cancel Reservation Search
+{% endblock %}
+
+{% block content %}
          <h1>Cancel Reservation</h1>
 	<p>
 		<form>
@@ -11,5 +17,4 @@
 	
     <a href = "mainMenu.html">Back</a>
 
-</body>
-
+{% endblock %}

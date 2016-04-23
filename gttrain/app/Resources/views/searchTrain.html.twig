@@ -1,6 +1,12 @@
-<!DOCTYPE html>
-<body>
-         <h1>Search Train</h1>
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedIn.html.twig' %}
+
+{% block title %}
+    Search Train
+{% endblock %}
+
+{% block content %}
+    <h1>Search Train</h1>
 	<p>Departs from:
 	<select>
 		  <option value="boston">Boston</option>
@@ -21,4 +27,4 @@
        Departure Date: <input type="text" name="fname"><br>
        <br>
        <a href = "selectDeparture.html">Find Trains</a>
-</body>
+{% endblock %}
