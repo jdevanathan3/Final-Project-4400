@@ -7,23 +7,24 @@
 
 {% block content %}
     <h1>Search Train</h1>
+	<form method = "post" action="selectDeparture">
 	<p>Departs from:
-	<select>
+	<select name="departStation">
 		{% for station in stations %}
-        <option>{{station[0]}}</option>
+        <option value="station[0]">{{station[0]}}</option>
     	{% endfor %}
 	</select>
 	</p>
 	<p>Arrives at:
-	<select>
-		  <option value="volvo">Boston</option>
-		    <option value="saab">New York</option>
-		      <option value="mercedes">Los Angeles</option>
-		        <option value="audi">Miami</option>
-       </select>
-       </p>
-       <br>
-       Departure Date: <input type="text" name="fname"><br>
-       <br>
-       <a href = "selectDeparture">Find Trains</a>
+	<select name="arriveStation">
+		{% for station in stations %}
+        <option>{{station[0]}}</option>
+    	{% endfor %}
+    </select>
+    </p>
+   <br>
+   Departure Date: <input type="text" name="reservationDate"><br><br>
+	<input type = "submit">Find Trains</a>
+   </form>
+>
 {% endblock %}

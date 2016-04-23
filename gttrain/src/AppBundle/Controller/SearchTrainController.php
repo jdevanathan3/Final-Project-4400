@@ -33,6 +33,17 @@ class SearchTrainController extends Controller
 		return $result->fetch_all();
 	}
 	
+	public function processPost(Request $request) {
+        $departStation = $request->request->get('departStation');
+        $arriveStation = $request->request->get('arriveStation');
+        $date = $request->request->get('reservationDate');
+		
+		$html = $this->container->get('templating')->render('selectDeparture.html.twig');
+		return new Response($html);
+    }
+
+	
+	
 
 }
 
