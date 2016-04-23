@@ -11,7 +11,7 @@ class LoginController extends Controller
     /**
      * @Route("/login")
      */
-    public function numberAction()
+    public function show()
     {
         $html = $this->container->get('templating')->render(
             'login.html.twig',
