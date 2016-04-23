@@ -1,6 +1,32 @@
 {# app/Resources/views/login.html.twig #}
-{% extends 'base.html.twig' %}
+{% extends 'base.loggedOut.html.twig' %}
 
-{% block body %}
-    <h1>Registratoin: {{ luckyNumberList }}</h1>
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Login</h3>
+                </div>
+                <div class="panel-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Email address</label>
+                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                        </div>
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">right side</div>
+    </div>
 {% endblock %}
