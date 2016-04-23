@@ -1,0 +1,23 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base.loggedOut.html.twig' %}
+
+{% block title %}
+    Registration
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Register</h3>
+                </div>
+                <div class="panel-body">
+                    <p>You've successfully registered. Click login to login with your newly created account.</p>
+                    <a class="btn btn-default" href="/login" role="button">Login</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">right side</div>
+    </div>
+{% endblock %}
