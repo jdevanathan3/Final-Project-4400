@@ -9,10 +9,9 @@
     <h1>Search Train</h1>
 	<p>Departs from:
 	<select>
-		  <option value="boston">Boston</option>
-		    <option value="new york">New York</option>
-		      <option value="los angeles">Los Angeles</option>
-		        <option value="miami">Miami</option>
+		{% for station in stations %}
+        <option>{{station['Name']}}</option>
+    	{% endfor %}
 	</select>
 	</p>
 	<p>Arrives at:
