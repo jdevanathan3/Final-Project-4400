@@ -1,0 +1,39 @@
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+    Revenue Report
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12"><h1>Revenue Report</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li><a href="/manager/dashboard">Manager</a></li>
+                <li class="active">Revenue Report</li>
+            </ol>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Revenue</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for result in results %}
+                    <tr>
+                        <td>{{ result[0] }}</td>
+                        <td>{{ result[1] }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

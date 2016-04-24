@@ -1,6 +1,6 @@
 <?php
-// src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+
+namespace AppBundle\Controller\manager;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,18 +12,14 @@ use \mysqli;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
-class ManagerChooseFunctionalityController extends Controller
+class ManagerDashboardController extends Controller
 {
     /**
-     * @Route("/managerChooseFunctionality")
+     * @Route("/manager/dashboard")
      */
-    public function numberAction()
+    public function showDashboard()
     {
-        $html = $this->container->get('templating')->render(
-            'managerChooseFunctionality.html.twig',
-            array('luckyNumberList' => 1)
-        );
-
+        $html = $this->container->get('templating')->render('manager/dashboard.html.twig');
         return new Response($html);
     }
 }

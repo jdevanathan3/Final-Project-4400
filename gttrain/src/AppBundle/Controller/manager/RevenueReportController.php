@@ -1,6 +1,6 @@
 <?php
-// src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+
+namespace AppBundle\Controller\manager;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,9 +15,9 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class RevenueReportController extends Controller
 {
     /**
-     * @Route("/revenueReport")
+     * @Route("/manager/reports/revenue")
      */
-    public function getRevenueDisplay()
+    public function showReport()
     {
         $results = $this->getRevenue();
         for($x =0; $x < count($results); $x++) {
@@ -62,14 +62,11 @@ class RevenueReportController extends Controller
                     break;
             }
         }
-        $html = $this->container->get('templating')->render(
-            'revenueReport.html.twig',
-            array("results" => $results)
-        );
+        $html = $this->container->get('templating')->render('manager/revenueReport.html.twig', array("results" => $results));
         return new Response($html);
     }
 
-    public function getRevenue() {
+    private function getRevenue() {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $result = $db->query("Select Month(EarliestMonth) as Months, Sum(Price) From ( SELECT Reservation.ReservationID, Reservation.Username, Reservation.Price, Min(Reserves.Departure_Date) as EarliestMonth	FROM `Reservation` Join Reserves ON	Reservation.ReservationID = Reserves.ReservationID GROUP BY Reservation.ReservationID )Prices GROUP By Month(EarliestMonth)");
         return $result->fetch_all();

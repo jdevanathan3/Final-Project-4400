@@ -1,6 +1,6 @@
 <?php
-// src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+
+namespace AppBundle\Controller\manager;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,15 +15,12 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class PopularRouteController extends Controller
 {
     /**
-     * @Route("/popularRoute")
+     * @Route("/manager/reports/popularRoutes")
      */
-    public function numberAction()
+    public function showReport()
     {
         $results = $this->getPopularRoutes();
-        $html = $this->container->get('templating')->render(
-            'popularRoute.html.twig',
-            array('results' => $results)
-        );
+        $html = $this->container->get('templating')->render('manager/popularRouteReport.html.twig', array('results' => $results));
         return new Response($html);
     }
     
