@@ -40,7 +40,7 @@ class SearchReservationController extends Controller
             $html = $this->container->get('templating')->render('reservation/updateReservation_search.html.twig', $errorArray);
             return new Response($html);
         } else {
-            return $this->redirectToRoute('reservationUpdate', ["reservationID" => $reservationId], 302);
+            return $this->redirectToRoute('reservationSelect', ["reservationID" => $reservationId], 302);
         }
     }
 

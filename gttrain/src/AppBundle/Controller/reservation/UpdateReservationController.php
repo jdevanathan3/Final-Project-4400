@@ -3,6 +3,8 @@
 namespace AppBundle\Controller\reservation;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -15,10 +17,12 @@ class UpdateReservationController extends Controller
     }
 
     /**
-     *@Route("/reservation/select")
+     * @Route("/reservation/select")
+     * @Method({"GET"})
      */
-    public function goToSelectReservation() {
-        $html = $this->container->get('templating')->render('reservation/updateReservation_select.html.twig');
+    public function showSelectTicket(Request $request) {
+        $reservationID = $request->query->get('reservationID');
+        $html = $this->container->get('templating')->render('reservation/updateReservation_select.html.twig', array("reservationID" => $reservationID));
         return new Response($html);
     }
     
