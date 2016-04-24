@@ -31,7 +31,7 @@ class MakeReservationController extends Controller
             $price = $this->getPrice($row[0], $row[3]);
             $totalPrice += $price;
             $ticket = array(
-                "trainNumber" => "Train ".$row[0],
+                "trainNumber" => $row[0],
                 "time" => ($times['Departure_Time']." - ".$times['OtherArrival']),
                 "duration" => $times['Duration'],
                 "date" => $row[6],
@@ -50,6 +50,7 @@ class MakeReservationController extends Controller
         }
         $totalCost = $this->calculateTotalPrice($user, $totalPrice, $totalExtraBags);
         $cards = $this->getCards($user);
+        $this->updateTotalCost($totalCost, $reservationId);
         $html = $this->container->get('templating')->render(
             'makeReservation.html.twig',
             array('tickets' => $tickets, 'totalCost' => $totalCost, 'cards' => $cards)
@@ -64,6 +65,24 @@ class MakeReservationController extends Controller
      */
     public function processPost(Request $request) {
         $cardNumber = $request->request->get('cardNumber');
+        $reservationId = $_SESSION['reservationId'];
+        $this->updateCardNumber($cardNumber, $reservationId);
+        return $this->redirectToRoute('confirmation',
+            [],
+            302);
+    }
+
+    /**
+     * @Route("/removeTicket")
+     * @Method({"POST"})
+     */
+    public function processRemovePost(Request $request) {
+        $trainNumber = $request->request->get('trainNumber');
+        $reservationId = $_SESSION['reservationId'];
+        $this->removeReserves($trainNumber, $reservationId);
+        return $this->redirectToRoute('makeReservation',
+            [],
+            302);
     }
 
 
@@ -135,6 +154,24 @@ WHere Stop.Train_Number = ".$trainNumber)->fetch_assoc()['Cost'];
         $query = "Select Card_Number as Card From Payment_Info Where Username Like '".$user."'";
         $cards = $db->query($query)->fetch_all();
         return $cards;
+    }
+
+    private function updateTotalCost($totalCost, $reservationId) {
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $query = "UPDATE `Reservation` SET `Price` = '".$totalCost."' WHERE `Reservation`.`ReservationID` = ".$reservationId;
+        $db->query($query);
+    }
+
+    private function removeReserves($trainNumber, $reservationId) {
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId." AND `Reserves`.`Train_Number` = ".$trainNumber;
+        $db->query($query);
+    }
+
+    private function updateCardNumber($cardNumber, $reservation) {
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $query = "UPDATE `Reservation` SET `Card_Number` = '".$cardNumber."' WHERE `Reservation`.`ReservationID` = ".$reservation;
+        $db->query($query);
     }
 }
 

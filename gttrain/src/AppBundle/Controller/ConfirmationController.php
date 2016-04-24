@@ -9,15 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class ConfirmationController extends Controller
 {
     /**
-     * @Route("/confirmation")
+     * @Route("/confirmation", name="confirmation")
      */
-    public function numberAction()
+    public function show()
     {
+        $reservationId = $_SESSION['reservationId'];
         $html = $this->container->get('templating')->render(
             'confirmation.html.twig',
-            array('luckyNumberList' => 1)
+            array('reservationId' => $reservationId)
         );
-
+        unset($_SESSION['reservationId']);
         return new Response($html);
     }
 }
