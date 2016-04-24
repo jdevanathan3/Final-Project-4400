@@ -1,22 +1,31 @@
 {# app/Resources/views/login.html.twig #}
-{% extends 'base.loggedIn.html.twig' %}
+{% extends 'base/base.loggedIn.html.twig' %}
 
 {% block title %}
     Main Menu
 {% endblock %}
 
 {% block content %}
-    <h1>Choose Functionality</h1>
-	<p>
-		<a style="font-size:18px" href = "trainSchedule/search">View Train Schedule</a><br>
-		<a style="font-size:18px" href = "/reservation/searchTrain">Make a New Reservation</a><br>
-		<a style="font-size:18px" href = "reservation/search">Update a Reservation</a><br>
-		<a style="font-size:18px" href = "cancelReservationSearch">Cancel a Reservation</a><br>
-		<a style="font-size:18px" href = "giveReview">Give Review</a><br>
-		<a style="font-size:18px" href = "viewReviewSearch">View Review</a><br>
-		<a style="font-size:18px" href = "addSchoolInfo">Add School Information (Student Discount)</a><br>
-		<br>
-		<br>
-	</p>
+	<div class="row">
+		<div class="col-md-12">
+			<h1>Choose Functionality</h1>
+		</div>
 
+	</div>
+	<div class="row">
+		<ol class="breadcrumb">
+			<li class="active">User</li>
+		</ol>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<p><a style="font-size:18px" href = "/train/schedule/search">View Train Schedule</a></p>
+			<p><a style="font-size:18px" href = "/reservation/searchTrain">Make a New Reservation</a></p>
+			<p><a style="font-size:18px" href = "reservation/search">Update a Reservation</a></p>
+			<p><a style="font-size:18px" href = "cancelReservationSearch">Cancel a Reservation</a></p>
+			<p><a style="font-size:18px" href = "giveReview">Give Review</a></p>
+			<p><a style="font-size:18px" href = "viewReviewSearch">View Review</a></p>
+			<p><a style="font-size:18px" href = "addSchoolInfo">Add School Information (Student Discount)</a></p>
+		</div>
+	</div>
 {% endblock %}

@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\Controller\manager;
+namespace AppBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -12,14 +12,14 @@ use \mysqli;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
-class ManagerDashboardController extends Controller
+class UserDashboardController extends Controller
 {
     /**
-     * @Route("/manager/dashboard", name="managerDashboard")
+     * @Route("/user/dashboard", name="userDashboard")
      */
     public function showDashboard()
     {
-        $html = $this->container->get('templating')->render('manager/dashboard.html.twig');
+        $html = $this->container->get('templating')->render('mainMenu.html.twig');
         return new Response($html);
     }
 }

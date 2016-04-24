@@ -11,7 +11,7 @@
 		<table style="width:100%">
 		  <tr>
 			<td>Train (Train Number)</td>
-			<td>Time (Duration)</td> 
+			<td>Time (Duration)</td>
 			<td>Departs From</td>
 			<td>Arrives At</td>
 			<td>Class</td>
@@ -20,22 +20,40 @@
 			<td>Passenger Name</td>
 			<td>Remove</td>
 		  </tr>
+			{% for row in tickets %}
+				<tr>
+					<td>{{ row['trainNumber'] }}</td>
+					<td>Departs {{ row['date'] }}<br>{{ row['time'] }} <br> {{ row['duration'] }}</td>
+					<td>{{ row['departsFrom'] }}</td>
+					<td>{{ row['arrivesAt'] }}</td>
+					<td>{{ row['class'] }}</td>
+					<td>{{ row['price'] }}</td>
+					<td>{{ row['bags'] }}</td>
+					<td>{{ row['passenger'] }}</td>
+					<td>a</td>
+				</tr>
+			{% endfor %}
 		</table>
 	</p>
 	<p>
-		Total Cost:
+		Total Cost: {{ totalCost }}
 	</p>
-	<p>
-		Use Card: 
-		<select>
-			
-		</select> 
-		<a style="font-size:12px" href = "paymentInfo">Add Card</a>
-	</p>
-	<p>
-		<a style="font-size:12px" href = "searchTrain">Continue Adding a Train</a>
-	</p>
-	<a href = "confirmation">Submit</a>
+	<form action="/reservation/selectDeparture" method="post" novalidate>
+		<p>
+
+			Use Card:
+			<select name="cardNumber">
+				{% for card in cards %}
+					<option value="{{ card[0] }}">{{ card[0] }}</option>
+				{% endfor %}
+			</select>
+			<a style="font-size:12px" href = "paymentInfo">Add Card</a>
+		</p>
+		<p>
+			<a style="font-size:12px" href = "/reservation/searchTrain">Continue Adding a Train</a>
+		</p>
+		<button type="submit" class="btn btn-default">Submit</button >
+	</form>
 <br>
 <br>
     <a href = "baggage">Back</a>

@@ -42,10 +42,14 @@ class SelectDepartureController extends Controller
         $departStation = $dataSplit[3];
         $arriveStation = $dataSplit[4];
         $date = $dataSplit[2];
-        $reservationId = $this->createReservation();
+        if (!isset($_SESSION['reservationId']))
+        {
+            $reservationId = $this->createReservation();
+            $_SESSION['reservationId'] = $reservationId;
+        }
         return $this->redirectToRoute('travelInfo',
             ["trainNumber" => $trainNumber, "trainClass" => $trainClass, "date" => $date, 
-                "reservationId" => $reservationId, "departStation" => $departStation, "arriveStation" => $arriveStation
+                 "departStation" => $departStation, "arriveStation" => $arriveStation
             ],
             302);
 	}
@@ -79,16 +83,16 @@ On Train_Route.Train_Number = Total.Train_Number";
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $maxID = $db->query("SELECT Max(ReservationID) + 1 as Max From Reservation")->fetch_assoc()['Max'];
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        //Get rid of debug $user value below
-        $user = "anon";
         $card = $db->query("SELECT Payment_Info.Card_Number as Card FROM `Payment_Info` WHERE Payment_Info.Username Like '".$user."' Limit 1")
             ->fetch_assoc()['Card'];
         var_dump($card);
         $query = "INSERT INTO `Reservation` (`ReservationID`, `Card_Number`, `Username`, `IsCancelled`, `Price`, `ReserveDate`, `CancelDate`) VALUES ('".$maxID."',
-         '".$card."', '".$user."', '0', '0', NULL, NULL)";
+         '".$card."', '".$user."', '0', '0', NOW(), NULL)";
         $db->query($query);
         return $maxID;
     }
+
+
 	
 }
 
