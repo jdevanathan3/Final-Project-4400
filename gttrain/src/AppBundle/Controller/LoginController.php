@@ -47,7 +47,15 @@ class LoginController extends Controller
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
             //implement admin logic here
-            $html = $this->container->get('templating')->render('mainMenu.html.twig');
+             
+            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+	    $user = $this->get('security.token_storage')->getToken()->getUser();
+            $result = $db->query("SELECT * FROM User WHERE Username='" . $user . " AND isManager=' . '1'");
+	    if($result == NULL) {
+                $html = $this->container->get('templating')->render('mainMenu.html.twig');
+	    } else {
+                $html = $this->container->get('templating')->render('managerChooseFunctionality.html.twig');
+	    }
             return new Response($html);
         } else {
             $error_array['prev_username'] = $username;
