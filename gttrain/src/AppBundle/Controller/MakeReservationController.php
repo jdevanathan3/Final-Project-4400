@@ -125,7 +125,7 @@ On Train_Route.Train_Number = Total.Train_Number";
 
     private function getPrice($trainNumber, $class){
         $classText = "";
-        if ($class === "1") {
+        if ($class == "1") {
             $classText = "1st_Class_price";
         } else {
             $classText = "2nd_Class_price";
