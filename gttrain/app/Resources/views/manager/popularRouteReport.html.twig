@@ -1,0 +1,41 @@
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+	Popular Route Report
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12"><h1>Popular Route Report</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<li><a href="/manager/dashboard">Manager</a></li>
+				<li class="active">Popular Route Report</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+				<tr>
+					<td>Month</td>
+					<td>Train Number</td>
+					<td># of Reservations</td>
+				</tr>
+				</thead>
+				<tbody>
+				{% for result in results %}
+					<tr>
+						<td>{{ result[0] }}</td>
+						<td>Train {{ result[1] }}</td>
+						<td>{{ result[2] }}</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

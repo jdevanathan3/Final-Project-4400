@@ -1,0 +1,24 @@
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+	Manager Dashboard
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12"><h1>Manager Dashboard</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<li class="active">Manager Dashboard</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<p><a style="font-size:18px" href = "/manager/reports/revenue">Revenue Report</a></p>
+			<p><a style="font-size:18px" href = "/manager/reports/popularRoutes">Popular Route Report</a></p>
+		</div>
+	</div>
+{% endblock %}

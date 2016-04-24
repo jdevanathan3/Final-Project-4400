@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/LoginController.php]
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\reservation;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
@@ -9,28 +9,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use \mysqli;
 
-class SearchTrainController extends Controller
+class SelectTrainController extends Controller
 {
-	
-
-	
     /**
-     * @Route("/searchTrain")
+     * @Route("/selectTrain")
      * @Method({"GET"})
      */
     public function show()
     {
-
 		$stations = $this->db_getStations();
         $html = $this->container->get('templating')->render(
-            'searchTrain.html.twig',
+            'reservation/selectTrain.html.twig',
             array("stations" => $stations)
         );
 
         return new Response($html);
     }
     /**
-     * @Route("/searchTrain")
+     * @Route("/selectTrain")
      * @Method({"POST"})
      *
      */
@@ -38,11 +34,13 @@ class SearchTrainController extends Controller
         $departStation = $request->request->get('departStation');
         $arriveStation = $request->request->get('arriveStation');
         $date = $request->request->get('reservationDate');
-		
-		//$html = $this->container->get('templating')->render('selectDeparture.html.twig');
-		//return new Response($html);
-	        $args = array(["departStation" => $departStation, "arriveStation" => $arriveStation, "date" => $date]);
-	        return $this->redirectToRoute('selectDeparturePost', $args, 301);
+
+        var_dump($departStation);
+        var_dump($arriveStation);
+        var_dump($date);
+        return $this->redirectToRoute('selectDeparture', 
+            ["departStation" => $departStation, "arriveStation" => $arriveStation, "reservationDate" => $date], 
+            302);
         }
 	
 	private function db_getStations() {
