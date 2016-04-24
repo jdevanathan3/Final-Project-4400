@@ -42,14 +42,14 @@ class SelectDepartureController extends Controller
         $departStation = $dataSplit[3];
         $arriveStation = $dataSplit[4];
         $date = $dataSplit[2];
-        $reservationId = $_SESSION['reservationId'];
-        if ($reservationId == NULL) {
+        if (!isset($_SESSION['reservationId']))
+        {
             $reservationId = $this->createReservation();
             $_SESSION['reservationId'] = $reservationId;
         }
         return $this->redirectToRoute('travelInfo',
             ["trainNumber" => $trainNumber, "trainClass" => $trainClass, "date" => $date, 
-                "reservationId" => $reservationId, "departStation" => $departStation, "arriveStation" => $arriveStation
+                 "departStation" => $departStation, "arriveStation" => $arriveStation
             ],
             302);
 	}

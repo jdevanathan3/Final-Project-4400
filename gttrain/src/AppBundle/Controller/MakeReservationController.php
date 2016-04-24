@@ -34,6 +34,7 @@ class MakeReservationController extends Controller
                 "trainNumber" => "Train ".$row[0],
                 "time" => ($times['Departure_Time']." - ".$times['OtherArrival']),
                 "duration" => $times['Duration'],
+                "date" => $row[6],
                 "departsFrom" => $row[1],
                 "arrivesAt" => $row[2],
                 "class" => $row[3],
@@ -44,7 +45,7 @@ class MakeReservationController extends Controller
             array_push($tickets, $ticket);
             $bagNumber = intval($ticket['bags']);
             if ($bagNumber > 2) {
-                $totalExtraBags += (4 - $bagNumber);
+                $totalExtraBags += ($bagNumber - 2);
             }
         }
         $totalCost = $this->calculateTotalPrice($user, $totalPrice, $totalExtraBags);

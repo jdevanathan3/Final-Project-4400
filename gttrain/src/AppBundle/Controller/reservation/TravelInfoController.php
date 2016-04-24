@@ -21,7 +21,6 @@ class TravelInfoController extends Controller
             "trainNumber" => $request->query->get('trainNumber'),
             "trainClass" => $request->query->get('trainClass'),
             "date" => $request->query->get('date'),
-            "reservationId" => $request->query->get('reservationId'),
             "departStation" => $request->query->get('departStation'),
             "arriveStation" => $request->query->get('arriveStation')
         );
@@ -37,10 +36,9 @@ class TravelInfoController extends Controller
      *
      */
     public function processPost(Request $request) {
-        $reservationId = $request->request->get('reservationId');
+
         $this->postReserves($request);
-        return $this->redirectToRoute('makeReservation',
-            ["reservationId" => $reservationId],
+        return $this->redirectToRoute('makeReservation', [],
             302);
     }
 
@@ -50,7 +48,7 @@ class TravelInfoController extends Controller
         $date = $request->request->get('date');
         $baggage = $request->request->get('baggage');
         $passengerName = $request->request->get('passenger_name');
-        $reservationId = $request->request->get('reservationId');
+        $reservationId = $_SESSION['reservationId'];
         $departStation = $request->request->get('departStation');
         $arriveStation = $request->request->get('arriveStation');
         var_dump($departStation);
