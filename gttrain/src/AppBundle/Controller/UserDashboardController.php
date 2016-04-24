@@ -20,6 +20,10 @@ class UserDashboardController extends Controller
     public function showDashboard()
     {
         $html = $this->container->get('templating')->render('mainMenu.html.twig');
+        if (isset($_SESSION['reservationId'])) {
+            $variable = $_SESSION['reservationId'];
+            unset($_SESSION['reservationId'], $variable);
+        }
         return new Response($html);
     }
 }
