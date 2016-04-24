@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use \DateTime;
+use \mysqli;
 
 class PaymentInfoController extends Controller
 {
@@ -33,17 +34,25 @@ class PaymentInfoController extends Controller
 	$cardNumber = $request->request->get('cardNumber');
 	$cardCVV = $request->request->get('cardCVV');
 	$cardExpDate = $request->request->get('cardExpDate');
-	$error_array = $this -> findErrors($cardName,$cardNumber, $cardCVV, $cardExpDate);
-	var_dump($error_array);
+            $date = new DateTime();
+	    $month = intval(strtok($cardExpDate, "/"));
+	    $year = intval(strtok("/"));
+            $date->setDate($year, $month, 1);
+	$error_array = $this -> findErrors($cardName,$cardNumber, $cardCVV, $date);
 	if(count($error_array) == 0) {
             $html = $this->container->get('templating')->render(
                 'paymentInfo.html.twig',
                  array('luckyNumberList' => 1)
             );
+            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+	    $db->query("INSERT INTO Payment_Info (Card_Number, Username, CVV, Exp_Date, nameOnCard) VALUES ('" . $cardNumber . "','" . $user . "','" . $cardCVV . "','" . $date->format('Y-m-d H:i:s')
+		    . "','" . $cardName . "')");
 	} else {
             $html = $this->container->get('templating')->render(
                 'paymentInfo.html.twig', $error_array
             );
+            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
             //return new Response($html);
         }
         return new Response($html);
@@ -72,11 +81,7 @@ class PaymentInfoController extends Controller
         if($cardExpDate == NULL) {
             $error_array['CARDEXPDATE_INVALID'] = true;
         } else {
-            $date = new DateTime();
-	    $month = intval(strtok($cardExpDate, "/"));
-	    $year = intval(strtok("/"));
-            $date->setDate($year, $month, 0);
-	    if($date->getTimestamp() <= (time() - 60*60*24)) { 
+	    if($cardExpDate->getTimestamp() <= (time() - 60*60*24)) { 
 	        $error_array['CARDEXPDATE_INVALID'] = true;	    
 	    } 
 	}
