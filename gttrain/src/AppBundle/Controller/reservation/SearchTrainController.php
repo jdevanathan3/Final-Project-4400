@@ -43,9 +43,15 @@ class SearchTrainController extends Controller
         }
 	
 	private function db_getStations() {
-		$db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-		$result = $db->query("SELECT * FROM Station");
-		return $result->fetch_all();
+            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+	    $result = $db->query("SELECT * FROM Station");
+	    return $result->fetch_all();
+            $cardNumber = $request->request->get('cardNumber');
+            $reservationId = $_SESSION['reservationId'];
+            $this->updateCardNumber($cardNumber, $reservationId);
+            return $this->redirectToRoute('confirmation',
+            [],
+            302);
 	}
 	
 

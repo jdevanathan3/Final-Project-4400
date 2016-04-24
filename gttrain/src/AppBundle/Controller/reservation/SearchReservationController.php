@@ -4,7 +4,9 @@ namespace AppBundle\Controller\reservation;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class SearchReservationController extends Controller
 {
@@ -23,5 +25,19 @@ class SearchReservationController extends Controller
         $result = $db->query("SELECT * FROM Station");
         return $result->fetch_all();
     }
+
+    /**
+     * @Route("/reservation/processSearch", name = "processSearch");
+     * @Method({"POST"})
+     */
+    public function processSearch(Request $request) {
+        $reservationId = $request->request->get('reservationID');
+	var_dump($reservationId);
+        $_SESSION['reservationId'] = $reservationId;
+        //$this->updateCardNumber($cardNumber, $reservationId);
+        return $this->redirectToRoute('reservation/update',
+            [],
+            302);
+    }   
 }
 ?>

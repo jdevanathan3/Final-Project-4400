@@ -23,7 +23,7 @@ class UpdateReservationController extends Controller
     }
     
     /**
-     * @Route("/reservation/update")
+     * @Route("/reservation/update", name = "reservation/update")
      */
     public function goToUpdateReservation() {
         $html = $this->container->get('templating')->render('reservation/updateReservation_update.html.twig');
