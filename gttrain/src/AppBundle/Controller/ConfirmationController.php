@@ -18,7 +18,8 @@ class ConfirmationController extends Controller
             'confirmation.html.twig',
             array('reservationId' => $reservationId)
         );
-        unset($_SESSION['reservationId']);
+        $variable = $_SESSION['reservationId'];
+        unset( $_SESSION['reservationId'], $variable );
         return new Response($html);
     }
 }

@@ -1,0 +1,21 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+    Main Menu
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Cannot cancel reservation less than one day before earliest departure</h1>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p><a style="font-size:18px" href = "mainMenu">Return to Main Menu</a></p>
+        </div>
+    </div>
+{% endblock %}

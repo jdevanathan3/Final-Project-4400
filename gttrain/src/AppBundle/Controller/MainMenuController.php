@@ -17,7 +17,6 @@ class MainMenuController extends Controller
             'mainMenu.html.twig',
             array('luckyNumberList' => 1)
         );
-
         return new Response($html);
     }
 }
