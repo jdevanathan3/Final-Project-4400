@@ -34,22 +34,21 @@ class GiveReviewController extends Controller
      *
      */
 	public function processPost(Request $request) {
-        $trainNumber = $request->request->get('trainNumberReview');
-        $rating = $request->request->get('rating');
-        $comment = $request->request->get('commentReview');
+		$trainNumber = $request->request->get('trainNumberReview');
+		$rating = $request->request->get('rating');
+		$comment = $request->request->get('commentReview');
 
 		$error_array = $this->findErrors($trainNumber, $rating, $comment);
-		
-//		$trainExists = $db->query("SELECT * FROM Train_Route WHERE Train_Number='" . $trainNumber . "'");
-//		if ($trainExists->fetch_field()->max_length == NULL) {
-//			//error
-//		} else {
-			$this->db_insertReview($trainNumber, $comment, $rating);
-            $html = $this->container->get('templating')->render('mainMenu.html.twig');
-            return new Response($html);
-//		}
-
-        return new Response($html);
+		var_dump($error_array);
+		if(count($error_array) > 0) {
+		    $html = $this->container->get('templating')->render(
+			'giveReview.html.twig', $error_array
+		    );
+		} else {
+		    $this->db_insertReview($trainNumber, $comment, $rating);
+		    $html = $this->container->get('templating')->render('mainMenu.html.twig');
+		} 
+		return new Response($html);
 	}
 	
 	private function findErrors($trainNumber, $rating, $comment) {
@@ -57,18 +56,17 @@ class GiveReviewController extends Controller
 
         // if train number is empty
         if($trainNumber == null) {
-            $error_array['TRAINNUMBER_EMPTY'] = true;
+            $error_array['TRAINNUMBER_INVALID'] = true;
         }
-        
 		//Check to see if train exists in the db
 		//$user = $this->db_getUser($username);
 
 
         return $error_array;
-    }
+        }
 	
 	 private function db_insertReview($trainNumber, $comment, $rating) {
-        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+                $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
 
 		$username = $this->get('security.token_storage')->getToken()->getUser();
 		$review_id = $db->query("SELECT Max(Review.ReviewID) as MaxID FROM Review");
@@ -79,7 +77,7 @@ class GiveReviewController extends Controller
 		
         $db->query("INSERT INTO Review (ReviewID, Username, Train_Number, Comment, Rating, ReviewDate) VALUES ('" . $new_id . "','". $username . "','" . $trainNumber . "', '" . $comment . "', '" . $rating . "', '" . $review_date . "')");
 		 
-    }
+        }
      
 }
 
