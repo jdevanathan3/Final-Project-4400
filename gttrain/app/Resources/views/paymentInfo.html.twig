@@ -11,21 +11,21 @@
 	<br>
 	<h3>Add Card</h3>
 	<p>		
-                    {% if PAYMENT_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong> Payment failed</div>{% endif %}
+                    {% if error.PAYMENT_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong> Payment failed</div>{% endif %}
 		     <form method = "post" action="getPaymentInfo">
-                        <div class="form-group{% if PAYMENT_FAILED is defined%} has-error{% endif %}">
+                        <div class="form-group{% if error.PAYMENT_FAILED is defined%} has-error{% endif %}">
 		            Name on Card:<br>
 		            <input type="text" name="cardName", id="cardName" placeholder="Full Name"><br>
-                            {% if CARDNAME_INVALID is defined %}<span id="helpBlock1" class="help-block">Name on card is empty.</span>{% endif %}
+                            {% if error.CARDNAME_INVALID is defined %}<span id="helpBlock1" class="help-block">Name on card is empty.</span>{% endif %}
 		            Card Number:<br>
 		            <input type="text" name="cardNumber" id="cardNumber" placeholder="16-digit card number"><br>
-                            {% if CARDNUMBER_INVALID is defined %}<span id="helpBlock1" class="help-block">Card number is invalid. Please enter a valid card number.</span>{% endif %}
+                            {% if error.CARDNUMBER_INVALID is defined %}<span id="helpBlock1" class="help-block">Card number is invalid. Please enter a valid card number.</span>{% endif %}
 		            CVV:<br>
 		            <input type="text" name="cardCVV" id="cardCCV" placeholder="3-digit CCV"><br>
-                            {% if CARDCVV_INVALID is defined %}<span id="helpBlock1" class="help-block">Card CVV is invalid.</span>{% endif %}
+                            {% if error.CARDCVV_INVALID is defined %}<span id="helpBlock1" class="help-block">Card CVV is invalid.</span>{% endif %}
 		            Expiration Date (mm/yyyy):<br>
 		            <input type="text" name="cardExpDate" id="cardExpDate" placeholder="mm/yyyy"><br>
-                            {% if CARDEXPDATE_INVALID is defined %}<span id="helpBlock1" class="help-block">Card Expiration Date is invalid.</span>{% endif %}
+                            {% if error.CARDEXPDATE_INVALID is defined %}<span id="helpBlock1" class="help-block">Card Expiration Date is invalid.</span>{% endif %}
                         </div>
                         <input type="submit" value = "Submit">
 		     </form>
@@ -33,11 +33,14 @@
 	
 	<br>
 	<h3>Delete Card</h3>
-        {% if DELETE_CARD_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong>Could not delete card</div>{% endif %}
+        {% if error.DELETE_CARD_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong>Could not delete card</div>{% endif %}
         <form method = "post" action="getDeleteInfo"> 
 	<p>
 		Card Number:
-		<select id = "Added Cards">
+		<select id = "Added Cards", name="cardNumber">
+                {%for card in cards%}
+                <option value={{card['Card_Number']}}>{{card['Card_Number']}}</option>
+                {% endfor %}
 		</select> 
 	</p>
         <input type="submit" value="Submit">

@@ -12,56 +12,84 @@ use \mysqli;
 
 class PaymentInfoController extends Controller
 {
+    private function populateCardSelect() {
+	$query = $this->db_getCardsForUser();
+
+	$cards = array();
+	for ($x = 0; $x < $query->num_rows; $x++)
+	{
+	    $cards[$x] = $query->fetch_assoc();
+	}
+	return $cards;
+    }
+
     /**
      * @Route("/paymentInfo")
      */
-    public function numberAction()
+    public function show()
     { 
     
 	//$selected_value="selected_value";
 	//echo '<select name="select">';
-	$cards = $this->db_getCardsForUser();
-	var_dump($cards);
-	//for($cards as $card) {
-        
-	//}
-
-
+        $cards = $this -> populateCardSelect();
+	$error_array = array();
+	$args = array("error"=>$error_array, "cards"=>$cards);
         $html = $this->container->get('templating')->render(
 
             'paymentInfo.html.twig',
-            array('luckyNumberList' => 1)
+           $args 
         );
 
         return new Response($html);
     }
 
+    /**
+     * @Route("getDeleteInfo", name="getDeleteInfo")
+     * @Method({"POST"})
+     */
+    public function getDeleteInfo(Request $request)
+    { 
+    
+	$cardNumber = $request->request->get('cardNumber');
+        $error_array = $this -> tryToDelete($cardNumber); 
+        $cards = $this -> populateCardSelect();
+	$args = array("error"=>$error_array, "cards"=>$cards);
+        $html = $this->container->get('templating')->render(
+
+            'paymentInfo.html.twig',
+           $args 
+        );
+
+        return new Response($html);
+    }
 
     /**
      * @Route("/getPaymentInfo", name = "getPaymentInfo")
      * @Method({"POST"})
      */
     public function getPaymentInfo(Request $request) {
-	$cards = $this->db_getCardsForUser();
-	var_dump($cards);
+	$cards = $this->populateCardSelect();
 	$cardName = $request->request->get('cardName');
 	$cardNumber = $request->request->get('cardNumber');
 	$cardCVV = $request->request->get('cardCVV');
 	$cardExpDate = $request->request->get('cardExpDate');
-            $date = new DateTime();
-	    $month = intval(strtok($cardExpDate, "/"));
-	    $year = intval(strtok("/"));
-            $date->setDate($year, $month, 1);
+        $date = new DateTime();
+	$month = intval(strtok($cardExpDate, "/"));
+	$year = intval(strtok("/"));
+        $date->setDate($year, $month, 1);
 	$error_array = $this -> findErrors($cardName,$cardNumber, $cardCVV, $date);
 	if(count($error_array) == 0) {
+	    $this -> db_insertCard($cardNumber, $cardCVV, $date, $cardName);
+	    $cards = $this -> populateCardSelect();
+	    $args = array("error"=>$error_array, "cards"=>$cards);
             $html = $this->container->get('templating')->render(
                 'paymentInfo.html.twig',
-                 array('luckyNumberList' => 1)
+                $args 
             );
-	    $this -> db_insertCard($cardNumber, $cardCVV, $date, $cardName);
 	} else {
+	    $args = array("error"=>$error_array, "cards"=>$cards);
             $html = $this->container->get('templating')->render(
-                'paymentInfo.html.twig', $error_array
+                'paymentInfo.html.twig', $args
             );
         }
         return new Response($html);
@@ -70,7 +98,8 @@ class PaymentInfoController extends Controller
     private function db_getCardsForUser() {
          $user = $this->get('security.token_storage')->getToken()->getUser();
          $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-	 $db->query("SELECT CardNumber FROM Payment_Info WHERE Username='" . $user . "')");
+	 $query = $db->query("SELECT * FROM Payment_Info WHERE Username='" . $user . "'");
+	 return $query;
     }
 
     private function db_insertCard($cardNumber, $cardCVV, $date, $cardName) {
@@ -78,6 +107,28 @@ class PaymentInfoController extends Controller
          $user = $this->get('security.token_storage')->getToken()->getUser();
 	 $db->query("INSERT INTO Payment_Info (Card_Number, Username, CVV, Exp_Date, nameOnCard) VALUES ('" . $cardNumber . "','" . $user . "','" . $cardCVV . "','" . $date->format('Y-m-d H:i:s')
 		    . "','" . $cardName . "')");
+    }
+
+    private function db_deleteCard($cardNumber) {
+         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+         $user = $this->get('security.token_storage')->getToken()->getUser();
+	 $existingCards = $db->query("SELECT * FROM Reservation WHERE Card_Number='" . $cardNumber . "' AND Username='" . $user . "'");
+	 //var_dump($existingCards);
+	 if($existingCards->num_rows == 0) {
+	     $dopeness = $db->query("DELETE FROM Payment_Info WHERE Card_Number='" . $cardNumber . "' AND Username='" . $user . "'"); 
+	     //var_dump($dopeness);
+	     return true;
+	 } else {
+	     return false;
+	 }
+    }
+
+    private function tryToDelete($cardNumber) {
+        $error_array = [];
+	if(!$this -> db_deleteCard($cardNumber)) {
+		$error_array['DELETE_CARD_FAILED'] = true;
+	}
+        return $error_array;
     }
 
     private function findErrors($cardName, $cardNumber, $cardCVV, $cardExpDate) {
