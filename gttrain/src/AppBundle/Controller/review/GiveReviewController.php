@@ -20,7 +20,7 @@ class GiveReviewController extends Controller
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render('giveReview.html.twig');
+        $html = $this->container->get('templating')->render('review/giveReview.html.twig');
         return new Response($html);
     }
 	
@@ -37,11 +37,12 @@ class GiveReviewController extends Controller
 		$error_array = $this->findErrors($trainNumber, $rating, $comment);
 		if(count($error_array) > 0) {
 		    $html = $this->container->get('templating')->render(
-			'giveReview.html.twig', $error_array
+			'review/giveReview.html.twig', $error_array
 		    );
 		} else {
 		    $this->db_insertReview($trainNumber, $comment, $rating);
-		    $html = $this->container->get('templating')->render('mainMenu.html.twig');
+
+			return $this->redirectToRoute('userDashboard');
 		} 
 		return new Response($html);
 	}

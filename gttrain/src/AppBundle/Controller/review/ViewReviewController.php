@@ -25,7 +25,7 @@ class ViewReviewController extends Controller
         );
 		$reviews = $this->db_getReviews($inputs['trainNumber']);
 		$html = $this->container->get('templating')->render(
-            'viewReview.html.twig',
+            'review/viewReview.html.twig',
             array("reviews" => $reviews, "trainNumber" => $inputs['trainNumber'])
         );
 

@@ -20,7 +20,7 @@ class ViewReviewSearchController extends Controller
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render('viewReviewSearch.html.twig');
+        $html = $this->container->get('templating')->render('review/viewReviewSearch.html.twig');
         return new Response($html);
     }
 	
@@ -34,7 +34,7 @@ class ViewReviewSearchController extends Controller
 		$error_array = $this->findErrors($trainNumber);
 		if(count($error_array) > 0) {
 		    $html = $this->container->get('templating')->render(
-			'viewReviewSearch.html.twig', $error_array
+			'review/viewReviewSearch.html.twig', $error_array
 		    );
 		} else {
 		   return $this->redirectToRoute('viewReview', 
