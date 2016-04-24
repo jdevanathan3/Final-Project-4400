@@ -1,0 +1,17 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+    View Train Schedule Search
+{% endblock %}
+
+{% block content %}
+	{% if trainNumberError is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong> Train Number is invalid</div>{% endif %}
+	<form action="/trainSchedule" method="post" novalidate>
+		<div class="form-group">
+			<input type="text" class="form-control" name="input_trainNumber" id="input_trainNumber" placeholder="Train Number">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+
+{% endblock %}
