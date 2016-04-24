@@ -12,7 +12,7 @@ use \mysqli;
 class TrainScheduleController extends Controller
 {
     /**
-     * @Route("/trainSchedule")
+     * @Route("/train/schedule")
      * @Method({"POST"})
      */
     public function show(Request $request)
@@ -31,7 +31,7 @@ class TrainScheduleController extends Controller
     }
     
     /**
-     * @Route("/trainSchedule/search", name="trainScheduleSearch")
+     * @Route("/train/schedule/search", name="trainScheduleSearch")
      */
     public function showSearch(Request $request)
     {

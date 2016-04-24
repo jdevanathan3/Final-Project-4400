@@ -1,5 +1,5 @@
 {# app/Resources/views/login.html.twig #}
-{% extends 'base.loggedIn.html.twig' %}
+{% extends 'base/base.loggedIn.html.twig' %}
 
 {% block title %}
     Main Menu
@@ -8,7 +8,7 @@
 {% block content %}
     <h1>Choose Functionality</h1>
 	<p>
-		<a style="font-size:18px" href = "trainSchedule/search">View Train Schedule</a><br>
+		<a style="font-size:18px" href = "/train/schedule/search">View Train Schedule</a><br>
 		<a style="font-size:18px" href = "/reservation/searchTrain">Make a New Reservation</a><br>
 		<a style="font-size:18px" href = "reservation/search">Update a Reservation</a><br>
 		<a style="font-size:18px" href = "cancelReservationSearch">Cancel a Reservation</a><br>

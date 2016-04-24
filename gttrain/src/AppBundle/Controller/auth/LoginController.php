@@ -20,11 +20,7 @@ class LoginController extends Controller
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render(
-            'auth/login.html.twig',
-            array('luckyNumberList' => 1)
-        );
-
+        $html = $this->container->get('templating')->render('auth/login.html.twig');
         return new Response($html);
     }
 
@@ -40,23 +36,18 @@ class LoginController extends Controller
 
         if(count($error_array) == 0) {
 
-            // http://stackoverflow.com/questions/9550079/how-to-programmatically-login-authenticate-a-user
-            $token = new UsernamePasswordToken($username, $password, "public", ["ROLE_USER"]);
-            $this->get("security.token_storage")->setToken($token);
-            $event = new InteractiveLoginEvent($request, $token);
-            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+        $role = $this->db_getRole($username);
 
-            //implement admin logic here
-             
-            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $user = $this->get('security.token_storage')->getToken()->getUser();
-            $result = $db->query("SELECT * FROM User WHERE USERNAME='" . $user . "' AND isManager=1");
-        if($result->fetch_field()->max_length == NULL) {
-                $html = $this->container->get('templating')->render('mainMenu.html.twig');
-        } else {
-                $html = $this->container->get('templating')->render('managerChooseFunctionality.html.twig');
-        }
-            return new Response($html);
+        // http://stackoverflow.com/questions/9550079/how-to-programmatically-login-authenticate-a-user
+        $token = new UsernamePasswordToken($username, $password, "public", [$role]);
+        $this->get("security.token_storage")->setToken($token);
+        $event = new InteractiveLoginEvent($request, $token);
+        $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+            if($role == "ROLE_USER") {
+                return $this->redirectToRoute('userDashboard');
+            } else {
+                return $this->redirectToRoute('managerDashboard');
+            }
         } else {
             $error_array['prev_username'] = $username;
             $html = $this->container->get('templating')->render(
@@ -71,6 +62,16 @@ class LoginController extends Controller
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $result = $db->query("SELECT * FROM User WHERE USERNAME='" . $username . "'");
         return $result->fetch_assoc();
+    }
+
+    private function db_getRole($username) {
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $result = $db->query("SELECT * FROM User WHERE USERNAME='" . $username . "' AND isManager=1");
+        if($result->fetch_field()->max_length == NULL) {
+            return "ROLE_USER";
+        } else {
+            return "ROLE_MANAGER";
+        }
     }
 
     private function findErrors($username, $password) {
