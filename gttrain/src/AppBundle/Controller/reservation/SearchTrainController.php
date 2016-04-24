@@ -15,7 +15,7 @@ class SearchTrainController extends Controller
      * @Route("/reservation/searchTrain")
      * @Method({"GET"})
      */
-    public function show()
+    public function show(Request $request)
     {
 		$stations = $this->db_getStations();
         $html = $this->container->get('templating')->render(
@@ -34,6 +34,7 @@ class SearchTrainController extends Controller
      */
 	public function processPost(Request $request) {
         $departStation = $request->request->get('input_departStation');
+        $reservationId = $request->request->get('reservationId');
         $arriveStation = $request->request->get('input_arriveStation');
         $date = $request->request->get('input_date');
         return $this->redirectToRoute('selectDeparture', 
