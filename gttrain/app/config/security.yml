@@ -29,5 +29,6 @@ security:
     access_control:
         - { path: ^/reservation, roles: ROLE_USER }
         - { path: ^/train, roles: ROLE_USER }
+        - { path: ^/review, roles: ROLE_USER }
         - { path: ^/manager, roles: ROLE_MANAGER }
 
