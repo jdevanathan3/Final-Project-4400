@@ -46,8 +46,8 @@ class LoginController extends Controller
             $event = new InteractiveLoginEvent($request, $token);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-
-            $html = $this->container->get('templating')->render('loginSuccess.html.twig');
+            //implement admin logic here
+            $html = $this->container->get('templating')->render('mainMenu.html.twig');
             return new Response($html);
         } else {
             $error_array['prev_username'] = $username;
