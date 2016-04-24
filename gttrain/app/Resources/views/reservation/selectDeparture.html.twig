@@ -20,7 +20,8 @@
 	<form action="/reservation/selectDeparture" method="post" novalidate>
 		<div class="row">
 
-			<div class="col-md-8">
+			<div class="col-md-6">
+				{% if trains|length < 1 %}<div class="alert alert-danger" role="alert"><strong>Error!</strong> No trains found for the given criteria</div>{% endif %}
 				<table class="table table-bordered">
 					<thead>
 					<tr><th>Train</th><th>Departure Time</th><th>Arrival Time</th><th>Duration</th><th>1st Class Price</th><th>2nd Class Price</th></tr>
@@ -41,22 +42,33 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<h3 class="panel-title">Info</h3>
+						<h3 class="panel-title">Train info</h3>
 					</div>
 					<div class="panel-body">
-						<p>Departs from: {{ inputs.departStation }}</p>
-						<p>Arrives at: {{ inputs.arriveStation }}</p>
-						<p>Date: {{ inputs.date }}</p>
+						<form>
+							<div class="form-group">
+								<label for="infoDepart">Departs from:</label>
+								<input type="text" class="form-control" id="infoDepart" value="{{ inputs.departStation }}" readonly>
+							</div>
+							<div class="form-group">
+								<label for="infoarrive">Arrives at:</label>
+								<input type="text" class="form-control" id="infoArrive" value="{{ inputs.arriveStation }}" readonly>
+							</div>
+							<div class="form-group">
+								<label for="infoDate">Date</label>
+								<input type="text" class="form-control" id="infoDate" value="{{ inputs.date }}" readonly>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<button type="submit" class="btn btn-default">Submit</button>
+				<button type="submit" class="btn btn-default{% if trains|length < 1 %} disabled{% endif %}">Submit</button >
 			</div>
 		</div>
 	</form>
