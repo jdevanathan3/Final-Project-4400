@@ -12,8 +12,8 @@ use \mysqli;
 class SelectDepartureController extends Controller
 {
     /**
-     * @Route("/selectDeparture")
-	 * 
+     * @Route("/selectDeparture", name="selectDeparture")
+     * 
      */
     public function numberAction()
     {
@@ -21,19 +21,28 @@ class SelectDepartureController extends Controller
             'selectDeparture.html.twig',
             array('luckyNumberList' => 1)
         );
-        return new Response($html);
+        return new Response("You are not on departure post.");
     }
 	
 	/**
-     * @Route("/selectDeparture")
-     * @Method({"POST"})
-     */
-	public function processPost(Request $request) {
+         * @Route("/selectDeparturePost", name="selectDeparturePost")
+         * @Method({"GET"})
+	 */ 
+	public function processPost(Request $request, array $args = ["dope", "patrick-senpai"]) {
         
         $departStation = $request->request->get('departStation');
-		var_dump($departStation);
+        $arriveStation = $request->request->get('arriveStation');
+        $reservationDate = $request->request->get('reservationDate');
+	var_dump($departStation);
+	var_dump($arriveStation);
+	var_dump($reservationDate);
+        $html = $this->container->get('templating')->render(
+            'selectDeparture.html.twig',
+            array('luckyNumberList' => 1)
+        );
+        return new Response("You are on departure post.");
        
-    }
+	}
 	
 }
 
