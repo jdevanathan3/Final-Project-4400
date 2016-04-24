@@ -17,6 +17,7 @@
 			</ol>
 		</div>
 	</div>
+	<form action="/reservation/selectDeparture" method="post" novalidate>
 	<div class="row">
 		<div class="col-md-8">
 			<table class="table table-bordered">
@@ -25,7 +26,14 @@
 				</thead>
 				<tbody>
 				{% for route in trains %}
-					<tr><td>{{ route[0] }}</td><td>{{ route[2] }}</td><td>{{ route[4] }}</td><td>{{ route[5] }}</td><td><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">{{ route[6] }}</label></td><td><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">{{ route[7] }}</label></td></tr>
+					<tr>
+						<td>{{ route[0] }}</td>
+						<td>{{ route[2] }}</td>
+						<td>{{ route[4] }}</td>
+						<td>{{ route[5] }}</td>
+						<td><label class="radio-inline"><input type="radio" name="input_trainRadio" id="inlineRadio1" value="{{ route[0] }}_1">{{ route[6] }}</label></td>
+						<td><label class="radio-inline"><input type="radio" name="input_trainRadio" id="inlineRadio1" value="{{ route[0] }}_1">{{ route[7] }}</label></td>
+					</tr>
 				{% endfor %}
 				</tbody>
 			</table>
@@ -43,4 +51,10 @@
 			</div>
 		</div>
 	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<button type="submit" class="btn btn-default">Submit</button>
+		</div>
+	</div>
+	</form>
 {% endblock %}

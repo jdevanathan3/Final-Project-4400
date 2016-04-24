@@ -31,12 +31,18 @@ class SelectDepartureController extends Controller
     }
 	
 	/**
-         * @Route("/reservation/selectDeparturePost", name="selectDeparturePost")
-         * @Method({"GET"})
+         * @Route("/reservation/selectDeparture")
+         * @Method({"POST"})
 	 */ 
-	public function processPost(Request $request, array $args = ["dope", "patrick-senpai"]) {
+	public function processPost(Request $request) {
+        $data = $request->request->get('input_trainRadio');
+        $dataSplit = explode('_', $data);
+        $trainNumber = $dataSplit[0];
+        $trainClass = $dataSplit[1];
 
-       
+        return $this->redirectToRoute('makeReservation',
+            ["trainNumber" => $trainNumber, "trainClass" => $trainClass],
+            302);
 	}
 
     private function db_getTrains($startStation, $endStation) {
