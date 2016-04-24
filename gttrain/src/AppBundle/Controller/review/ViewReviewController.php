@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\review;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,7 +15,8 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class ViewReviewController extends Controller
 {
     /**
-     * @Route("/viewReview", name="viewReview")
+     * @Route("/review/view", name="viewReview")
+     * @Method({"GET"})
      */
     public function show(Request $request)
     {
@@ -25,7 +26,7 @@ class ViewReviewController extends Controller
 		$reviews = $this->db_getReviews($inputs['trainNumber']);
 		$html = $this->container->get('templating')->render(
             'viewReview.html.twig',
-            array("reviews" => $reviews)
+            array("reviews" => $reviews, "trainNumber" => $inputs['trainNumber'])
         );
 
 		

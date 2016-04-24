@@ -1,0 +1,34 @@
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+	Reviews for train {{ trainNumber }}
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12"><h1>Reviews for Train {{ trainNumber }}</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<li><a href="/user/dashboard">User</a></li>
+				<li><a href="/review/search">Reviews</a></li>
+				<li class="active">Train {{ trainNumber }}</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-bordered">
+				<thead>
+				<tr><th>Rating</th><th>Comment</th></tr>
+				</thead>
+				<tbody>
+				{% for review in reviews %}
+					<tr><td>{{ review['Rating'] }}</td><td>{{ review['Comment'] }}</td></tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\review;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,21 +15,17 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class GiveReviewController extends Controller
 {
     /**
-     * @Route("/giveReview")
+     * @Route("/review/give")
      * @Method({"GET"})
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render(
-            'giveReview.html.twig',
-            array('luckyNumberList' => 1)
-        );
-
+        $html = $this->container->get('templating')->render('giveReview.html.twig');
         return new Response($html);
     }
 	
     /**
-     * @Route("/giveReview")
+     * @Route("/review/give")
      * @Method({"POST"})
      *
      */

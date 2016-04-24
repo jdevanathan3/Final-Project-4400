@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\review;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -15,22 +15,18 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class ViewReviewSearchController extends Controller
 {
     /**
-     * @Route("/viewReviewSearch")
+     * @Route("/review/search")
+	 * @Method({"GET"})
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render(
-            'viewReviewSearch.html.twig',
-            array('luckyNumberList' => 1)
-        );
-
+        $html = $this->container->get('templating')->render('viewReviewSearch.html.twig');
         return new Response($html);
     }
 	
 	 /**
-     * @Route("/viewReviewSearchD", name = "viewReviewSearchD")
+     * @Route("/review/search", name = "viewReviewSearchD")
      * @Method({"POST"})
-     *
      */
 	public function processPost(Request $request) {
         $trainNumber = $request->request->get('trainNumberReviewSearch');
