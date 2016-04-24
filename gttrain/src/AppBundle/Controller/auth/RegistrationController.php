@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/RegistrationController.php
-namespace AppBundle\Controller\Authentication;
+namespace AppBundle\Controller\auth;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

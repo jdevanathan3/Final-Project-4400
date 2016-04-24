@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\auth;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,7 +18,7 @@ class LoginController extends Controller
     public function show()
     {
         $html = $this->container->get('templating')->render(
-            'login.html.twig',
+            'auth/login.html.twig',
             array('luckyNumberList' => 1)
         );
         return new Response($html);
@@ -37,21 +37,12 @@ class LoginController extends Controller
             $this->get("security.token_storage")->setToken($token);
             $event = new InteractiveLoginEvent($request, $token);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
-            //implement admin logic here
-
-            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-            $user = $this->get('security.token_storage')->getToken()->getUser();
-            $result = $db->query("SELECT * FROM User WHERE Username='" . $user . " AND isManager=' . '1'");
-            if($result == NULL) {
-                $html = $this->container->get('templating')->render('mainMenu.html.twig');
-            } else {
-                $html = $this->container->get('templating')->render('managerChooseFunctionality.html.twig');
-            }
+            $html = $this->container->get('templating')->render('auth/loginSuccess.html.twig');
             return new Response($html);
         } else {
             $error_array['prev_username'] = $username;
             $html = $this->container->get('templating')->render(
-                'login.html.twig', $error_array
+                'auth/login.html.twig', $error_array
             );
             return new Response($html);
         }
