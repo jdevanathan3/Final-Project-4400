@@ -10,9 +10,15 @@
 	<p>
 		<table style="width:100%">
 		  <tr>
-			<td>Month</td>
-			<td>Revenue</td> 
+			<th>Month</th>
+			<th>Revenue</th>
 		  </tr>
+	{% for i in (0..2)%}
+			<tr>
+				<td>{{ results[i][0] }}</td>
+				<td>{{ results[i][1] }}</td>
+			</tr>
+	{% endfor %}
 		</table>
 	</p>
 	

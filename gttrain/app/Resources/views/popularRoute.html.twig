@@ -14,6 +14,19 @@
 			<td>Train Number</td> 
 			<td># of Reservations</td>
 		  </tr>
+		{% for row in results %}
+			<tr>
+				<td>
+					{{ row[0] }}
+				</td>
+				<td>
+					Train {{ row[1] }}
+				</td>
+				<td>
+					{{ row[2] }}
+				</td>
+			</tr>
+		{% endfor %}
 		</table>
 	</p>
 
