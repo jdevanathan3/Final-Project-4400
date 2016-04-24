@@ -29,8 +29,8 @@ class SearchTrainController extends Controller
 	
     /**
      * @Route("/reservation/searchTrain")
-     * @Method({"POST"})
-     *
+     * 
+     *@Method({"POST"})
      */
 	public function processPost(Request $request) {
         $departStation = $request->request->get('input_departStation');

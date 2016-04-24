@@ -44,6 +44,7 @@ class SelectDepartureController extends Controller
         $date = $dataSplit[2];
         if (!isset($_SESSION['reservationId']))
         {
+            var_dump("this runs");
             $reservationId = $this->createReservation();
             $_SESSION['reservationId'] = $reservationId;
         }
