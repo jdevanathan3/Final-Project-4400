@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/LoginController.php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Authentication;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -20,11 +20,7 @@ class LoginController extends Controller
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render(
-            'login.html.twig',
-            array('luckyNumberList' => 1)
-        );
-
+        $html = $this->container->get('templating')->render('auth/login.html.twig');
         return new Response($html);
     }
 
@@ -47,12 +43,12 @@ class LoginController extends Controller
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
 
-            $html = $this->container->get('templating')->render('loginSuccess.html.twig');
+            $html = $this->container->get('templating')->render('auth/loginSuccess.html.twig');
             return new Response($html);
         } else {
             $error_array['prev_username'] = $username;
             $html = $this->container->get('templating')->render(
-                'login.html.twig', $error_array
+                'auth/login.html.twig', $error_array
             );
             return new Response($html);
         }

@@ -1,6 +1,6 @@
 <?php
 // src/AppBundle/Controller/RegistrationController.php
-namespace AppBundle\Controller;
+namespace AppBundle\Controller\Authentication;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,11 +17,7 @@ class RegistrationController extends Controller
      */
     public function show()
     {
-        $html = $this->container->get('templating')->render(
-            'register.html.twig',
-            array('luckyNumberList' => 1)
-        );
-
+        $html = $this->container->get('templating')->render('auth/register.html.twig');
         return new Response($html);
     }
 
@@ -38,14 +34,14 @@ class RegistrationController extends Controller
 
         if(count($error_array) == 0) {
             $this->db_insertUser($username, $password, $email);
-            $html = $this->container->get('templating')->render('registerSuccess.html.twig');
+            $html = $this->container->get('templating')->render('auth/registerSuccess.html.twig');
             return new Response($html);
         } else {
             $error_array['prev_username'] = $username;
             $error_array['prev_email'] = $email;
             $error_array['prev_password'] = $password;
             $html = $this->container->get('templating')->render(
-                'register.html.twig', $error_array
+                'auth/register.html.twig', $error_array
             );
             return new Response($html);
         }

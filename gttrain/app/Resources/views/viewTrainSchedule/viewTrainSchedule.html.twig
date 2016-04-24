@@ -1,0 +1,20 @@
+{# app/Resources/views/login.html.twig #}
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+     View Train Schedule
+{% endblock %}
+
+{% block content %}
+	<h1>Schedule for Train {{ trainNumber }}</h1>
+	<table class="table table-bordered">
+		<thead>
+			<tr><th>Arrival Time</th><th>Departure Time</th><th>Station</th></tr>
+		</thead>
+		<tbody>
+			{% for stop in schedule %}
+				<tr><td>{{ stop[1] }}</td><td>{{ stop[2] }}</td><td>{{ stop[3] }}</td></tr>
+			{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
