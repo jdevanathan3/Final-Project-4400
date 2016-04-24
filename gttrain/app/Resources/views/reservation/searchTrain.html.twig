@@ -1,0 +1,75 @@
+{% extends 'base/base.loggedIn.html.twig' %}
+
+{% block title %}
+	Search Train
+{% endblock %}
+
+{% block content %}
+	<div class="row">
+		<div class="col-md-12"><h1>Search Train</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<li>Reservation</li>
+				<li class="active">Search Train</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Search Train</h3>
+				</div>
+				<div class="panel-body">
+					<form action="/reservation/searchTrain" method="post" novalidate>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="input_departStation">Start Station</label>
+								</div>
+								<div class="col-md-9">
+									<select class="form-control" id="input_departStation" name="input_departStation">
+										{% for station in stations %}
+											<option value="{{ station[0]}}">{{station[0]}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="input_arriveStation">End Station</label>
+								</div>
+								<div class="col-md-9">
+									<select class="form-control" id="input_arriveStation" name="input_arriveStation">
+										{% for station in stations %}
+											<option value="{{ station[0]}}">{{station[0]}}</option>
+										{% endfor %}
+									</select>
+								</div>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="row">
+								<div class="col-md-3">
+									<label for="input_date">End:</label>
+								</div>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="input_date" id="input_date" placeholder="Date">
+								</div>
+							</div>
+						</div>
+						<button type="submit" class="btn btn-default">Submit</button>
+					</form>
+				</div>
+			</div>
+
+		</div>
+		<div class="col-md-6">
+			right side
+		</div>
+	</div>
+{% endblock %}
