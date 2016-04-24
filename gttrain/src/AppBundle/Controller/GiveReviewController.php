@@ -39,7 +39,6 @@ class GiveReviewController extends Controller
 		$comment = $request->request->get('commentReview');
 
 		$error_array = $this->findErrors($trainNumber, $rating, $comment);
-		var_dump($error_array);
 		if(count($error_array) > 0) {
 		    $html = $this->container->get('templating')->render(
 			'giveReview.html.twig', $error_array

@@ -9,8 +9,10 @@
 <h1>Give Review</h1>
 	
 	<p>		
+                {% if TRAINNUMBER_INVALID is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong> Train Number invalid. Please enter in a valid train number.</div>{% endif %}
 		<form method = "post" action="/giveReview">
 		  Train Number:<br>
+                  <div class="form-group{% if TRAINNUMBER_INVALID is defined%} has-error{% endif %}">
 		  <input type="text" name="trainNumberReview"><br><br>
 		  Rating:
 			<select name="rating">
@@ -25,6 +27,7 @@
 		
 			</p><br>
 			<input type="submit" value="Submit">
+                </div>
 		</form>
 <br>
 <br>
