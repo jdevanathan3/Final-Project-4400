@@ -59,17 +59,16 @@ class GiveReviewController extends Controller
         }
 
         return $error_array;
-        }
+	}
 	
 	private function db_checkTrainNumber($trainNumber) {
-                $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-                $query = $db->query("SELECT * FROM Train_Route WHERE Train_Number='" . $trainNumber . "'");
-		var_dump($query);
-	        return $query->num_rows != 0;
+		$db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+		$query = $db->query("SELECT * FROM Train_Route WHERE Train_Number='" . $trainNumber . "'");
+		return $query->num_rows != 0;
 	}
 	
 	 private function db_insertReview($trainNumber, $comment, $rating) {
-                $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
 
 		$username = $this->get('security.token_storage')->getToken()->getUser();
 		$review_id = $db->query("SELECT Max(Review.ReviewID) as MaxID FROM Review");

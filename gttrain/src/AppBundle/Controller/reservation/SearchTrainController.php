@@ -24,6 +24,9 @@ class SearchTrainController extends Controller
         );
         return new Response($html);
     }
+	
+
+	
     /**
      * @Route("/reservation/searchTrain")
      * @Method({"POST"})
