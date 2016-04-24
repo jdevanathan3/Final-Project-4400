@@ -1,5 +1,5 @@
 {# app/Resources/views/login.html.twig #}
-{% extends 'base.loggedIn.html.twig' %}
+{% extends 'base/base.loggedIn.html.twig' %}
 
 {% block title %}
     Search Train
@@ -7,24 +7,23 @@
 
 {% block content %}
     <h1>Search Train</h1>
-	<form method = "post" action="searchTrain">
+	<form method = "post" action="/selectTrain">
 	<p>Departs from:
 	<select name="departStation">
 		{% for station in stations %}
-        <option value="station[0]">{{station[0]}}</option>
+        <option value="{{ station[0]}}">{{station[0]}}</option>
     	{% endfor %}
 	</select>
 	</p>
 	<p>Arrives at:
 	<select name="arriveStation">
 		{% for station in stations %}
-        <option>{{station[0]}}</option>
+        <option value="{{station[0]}}">{{station[0]}}</option>
     	{% endfor %}
     </select>
     </p>
    <br>
    Departure Date: <input type="text" name="reservationDate"><br><br>
-	<input type = "submit">Find Trains</a>
+		<button type="submit" class="btn btn-default">Find Trains</button>
    </form>
->
 {% endblock %}
