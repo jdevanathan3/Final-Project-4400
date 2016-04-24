@@ -15,19 +15,13 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class MakeReservationController extends Controller
 {
     /**
-     * @Route("/makeReservation")
+     * @Route("/makeReservation", name="makeReservation")
      * @Method({"GET"})
      */
     public function showReservation(Request $request)
     {
-        $inputs = array(
-            "trainNumber" => $request->query->get('trainNumber'),
-            "departStation" => $request->query->get('departStation'),
-            "arriveStation" => $request->query->get('arriveStation'),
-            "departTime" => $request->query->get('departTime'),
-            "arriveTime" => $request->query->aget('arriveTime'),
-            "date" => $request->query->get('date')
-        );
+        $reservationId = $request->request->get('reservationId');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $html = $this->container->get('templating')->render(
             'makeReservation.html.twig',
             array('luckyNumberList' => 1)
@@ -36,7 +30,7 @@ class MakeReservationController extends Controller
         return new Response($html);
     }
 
-    private function getTickets() {
+    private function getTickets($reservationId) {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
     }

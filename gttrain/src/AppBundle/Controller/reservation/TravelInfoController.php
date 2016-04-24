@@ -12,14 +12,22 @@ use \mysqli;
 class TravelInfoController extends Controller
 {
     /**
-     * @Route("/reservation/travelInfo")
+     * @Route("/reservation/travelInfo" , name="travelInfo")
      * @Method({"GET"})
      */
-    public function show()
+    public function show(Request $request)
     {
+        $inputs = array(
+            "trainNumber" => $request->query->get('trainNumber'),
+            "trainClass" => $request->query->get('trainClass'),
+            "date" => $request->query->get('date'),
+            "reservationId" => $request->query->get('reservationId'),
+            "departStation" => $request->query->get('departStation'),
+            "arriveStation" => $request->query->get('arriveStation')
+        );
         $html = $this->container->get('templating')->render(
             'reservation/travelInfo.html.twig',
-            array("stations" => [])
+            array("inputs" => $inputs)
         );
         return new Response($html);
     }
@@ -29,13 +37,28 @@ class TravelInfoController extends Controller
      *
      */
     public function processPost(Request $request) {
+        $reservationId = $request->request->get('reservationId');
+        $this->postReserves($request);
+        return $this->redirectToRoute('makeReservation',
+            ["reservationId" => $reservationId],
+            302);
+    }
+
+    private function postReserves(Request $request) {
+        $trainNumber = $request->request->get('trainNumber');
+        $trainClass = $request->request->get('trainClass');
+        $date = $request->request->get('date');
+        $baggage = $request->request->get('baggage');
+        $passengerName = $request->request->get('passenger_name');
+        $reservationId = $request->request->get('reservationId');
         $departStation = $request->request->get('departStation');
         $arriveStation = $request->request->get('arriveStation');
-        $date = $request->request->get('reservationDate');
-
-        return $this->redirectToRoute('selectDeparture',
-            ["departStation" => $departStation, "arriveStation" => $arriveStation, "reservationDate" => $date],
-            302);
+        var_dump($departStation);
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $query = "INSERT INTO `Reserves` (`ReservationID`, `Train_Number`, `Class`, `Departure_Date`, `Passenger_Name`, `Number_Bags`, `Departs_From`, `Arrives_At`) 
+        VALUES ('".$reservationId."', '".$trainNumber."', '".$trainClass."', '".$date."', '".$passengerName."',
+         '".$baggage."', '".$departStation."', '".$arriveStation."')";
+        $db->query($query);
     }
 }
 ?>
