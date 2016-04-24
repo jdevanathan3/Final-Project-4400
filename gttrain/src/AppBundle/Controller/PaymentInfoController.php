@@ -16,8 +16,19 @@ class PaymentInfoController extends Controller
      * @Route("/paymentInfo")
      */
     public function numberAction()
-    {
+    { 
+    
+	//$selected_value="selected_value";
+	//echo '<select name="select">';
+	$cards = $this->db_getCardsForUser();
+	var_dump($cards);
+	//for($cards as $card) {
+        
+	//}
+
+
         $html = $this->container->get('templating')->render(
+
             'paymentInfo.html.twig',
             array('luckyNumberList' => 1)
         );
@@ -25,11 +36,14 @@ class PaymentInfoController extends Controller
         return new Response($html);
     }
 
+
     /**
      * @Route("/getPaymentInfo", name = "getPaymentInfo")
      * @Method({"POST"})
      */
     public function getPaymentInfo(Request $request) {
+	$cards = $this->db_getCardsForUser();
+	var_dump($cards);
 	$cardName = $request->request->get('cardName');
 	$cardNumber = $request->request->get('cardNumber');
 	$cardCVV = $request->request->get('cardCVV');
@@ -44,18 +58,26 @@ class PaymentInfoController extends Controller
                 'paymentInfo.html.twig',
                  array('luckyNumberList' => 1)
             );
-            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-            $user = $this->get('security.token_storage')->getToken()->getUser();
-	    $db->query("INSERT INTO Payment_Info (Card_Number, Username, CVV, Exp_Date, nameOnCard) VALUES ('" . $cardNumber . "','" . $user . "','" . $cardCVV . "','" . $date->format('Y-m-d H:i:s')
-		    . "','" . $cardName . "')");
+	    $this -> db_insertCard($cardNumber, $cardCVV, $date, $cardName);
 	} else {
             $html = $this->container->get('templating')->render(
                 'paymentInfo.html.twig', $error_array
             );
-            $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-            //return new Response($html);
         }
         return new Response($html);
+    }
+
+    private function db_getCardsForUser() {
+         $user = $this->get('security.token_storage')->getToken()->getUser();
+         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+	 $db->query("SELECT CardNumber FROM Payment_Info WHERE Username='" . $user . "')");
+    }
+
+    private function db_insertCard($cardNumber, $cardCVV, $date, $cardName) {
+         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+         $user = $this->get('security.token_storage')->getToken()->getUser();
+	 $db->query("INSERT INTO Payment_Info (Card_Number, Username, CVV, Exp_Date, nameOnCard) VALUES ('" . $cardNumber . "','" . $user . "','" . $cardCVV . "','" . $date->format('Y-m-d H:i:s')
+		    . "','" . $cardName . "')");
     }
 
     private function findErrors($cardName, $cardNumber, $cardCVV, $cardExpDate) {

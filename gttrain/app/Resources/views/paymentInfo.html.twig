@@ -32,17 +32,15 @@
 	</p>
 	
 	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 	<h3>Delete Card</h3>
+        {% if DELETE_CARD_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong>Could not delete card</div>{% endif %}
+        <form method = "post" action="getDeleteInfo"> 
 	<p>
 		Card Number:
-		<select>
+		<select id = "Added Cards">
 		</select> 
 	</p>
+        <input type="submit" value="Submit">
+        </form>
 
-	<a href = "makeReservation">Submit</a>
 {% endblock %}

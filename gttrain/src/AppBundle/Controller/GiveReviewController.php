@@ -54,15 +54,19 @@ class GiveReviewController extends Controller
         $error_array = [];
 
         // if train number is empty
-        if($trainNumber == null) {
+        if($trainNumber == null || !$this->db_checkTrainNumber($trainNumber)) {
             $error_array['TRAINNUMBER_INVALID'] = true;
         }
-		//Check to see if train exists in the db
-		//$user = $this->db_getUser($username);
-
 
         return $error_array;
         }
+	
+	private function db_checkTrainNumber($trainNumber) {
+                $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+                $query = $db->query("SELECT * FROM Train_Route WHERE Train_Number='" . $trainNumber . "'");
+		var_dump($query);
+	        return $query->num_rows != 0;
+	}
 	
 	 private function db_insertReview($trainNumber, $comment, $rating) {
                 $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
