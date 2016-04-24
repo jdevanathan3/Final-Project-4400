@@ -18,19 +18,19 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-md-6">
+		<div class="col-md-8">
 			<table class="table table-bordered">
 				<thead>
-				<tr><th>Train</th><th>Time (Duration)</th><th>1st Class Price</th><th>2nd Class Price</th></tr>
+				<tr><th>Train</th><th>Departure Time</th><th>Arrival Time</th><th>Duration</th><th>1st Class Price</th><th>2nd Class Price</th></tr>
 				</thead>
 				<tbody>
-					<tr><td>Train 1</td><td>5 minutes</td><td>$3.50</td><td>$7.00</td></tr>
-					<tr><td>Train 2</td><td>5 minutes</td><td>$3.50</td><td>$7.00</td></tr>
-					<tr><td>Train 3</td><td>5 minutes</td><td>$3.50</td><td>$7.00</td></tr>
+				{% for route in trains %}
+					<tr><td>{{ route[0] }}</td><td>{{ route[2] }}</td><td>{{ route[4] }}</td><td>{{ route[5] }}</td><td><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">{{ route[6] }}</label></td><td><label class="radio-inline"><input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">{{ route[7] }}</label></td></tr>
+				{% endfor %}
 				</tbody>
 			</table>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">Info</h3>
