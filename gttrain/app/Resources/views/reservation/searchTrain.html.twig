@@ -4,6 +4,10 @@
 	Search Train
 {% endblock %}
 
+{% block stylesheets %}
+	<link href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
 	<div class="row">
 		<div class="col-md-12"><h1>Search Train</h1></div>
@@ -26,10 +30,10 @@
 					<form action="/reservation/searchTrain" method="post" novalidate>
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<label for="input_departStation">Start Station</label>
 								</div>
-								<div class="col-md-9">
+								<div class="col-md-8">
 									<select class="form-control" id="input_departStation" name="input_departStation">
 										{% for station in stations %}
 											<option value="{{ station[0]}}">{{station[0]}}</option>
@@ -40,10 +44,10 @@
 						</div>
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-3">
+								<div class="col-md-4">
 									<label for="input_arriveStation">End Station</label>
 								</div>
-								<div class="col-md-9">
+								<div class="col-md-8">
 									<select class="form-control" id="input_arriveStation" name="input_arriveStation">
 										{% for station in stations %}
 											<option value="{{ station[0]}}">{{station[0]}}</option>
@@ -54,11 +58,11 @@
 						</div>
 						<div class="form-group">
 							<div class="row">
-								<div class="col-md-3">
-									<label for="input_date">End:</label>
+								<div class="col-md-4">
+									<label for="input_date">Date:</label>
 								</div>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="input_date" id="input_date" placeholder="Date">
+								<div class="col-md-8">
+									<input type="text" class="form-control" name="input_date" id="input_date" placeholder="Date" readonly>
 								</div>
 							</div>
 						</div>
@@ -69,7 +73,34 @@
 
 		</div>
 		<div class="col-md-6">
-			right side
-		</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Choose Date</h3>
+				</div>
+				<div class="panel-body">
+					<div id="datepicker"></div>
+				</div>
+			</div>
+
+
 	</div>
+	</div>
+{% endblock %}
+
+{% block scripts %}
+	<script src="{{ asset('js/moment.min.js') }}"></script>
+	<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+	<script>
+		$('#input_date').val(moment().format('YYYY-MM-DD'));
+		$('#datepicker').datepicker({
+			format: 'yyyy-mm-dd',
+			todayHighlight: true,
+			startDate: '0d'
+		});
+		$('#datepicker').on("changeDate", function() {
+			$('#input_date').val(
+					$('#datepicker').datepicker('getFormattedDate')
+			);
+		});
+	</script>
 {% endblock %}

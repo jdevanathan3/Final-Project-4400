@@ -36,7 +36,6 @@ class SearchTrainController extends Controller
         $departStation = $request->request->get('input_departStation');
         $arriveStation = $request->request->get('input_arriveStation');
         $date = $request->request->get('input_date');
-        
         return $this->redirectToRoute('selectDeparture', 
             ["departStation" => $departStation, "arriveStation" => $arriveStation, "date" => $date],
             302);
