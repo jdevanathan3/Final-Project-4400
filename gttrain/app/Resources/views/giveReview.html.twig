@@ -9,22 +9,23 @@
 <h1>Give Review</h1>
 	
 	<p>		
-		<form>
+		<form method = "post" action="/giveReview">
 		  Train Number:<br>
 		  <input type="text" name="trainNumberReview"><br><br>
 		  Rating:
-			<select>
-				<option value="vgood">Very Good</option>
-				<option value="good">Good</option>
-				<option value="neutral">Neutral</option>
-				<option value="bad">Bad</option>
-				<option value="vbad">Very Bad</option>
+			<select name="rating">
+				<option value="5">Very Good</option>
+				<option value="4">Good</option>
+				<option value="3">Neutral</option>
+				<option value="2">Bad</option>
+				<option value="1">Very Bad</option>
 			</select> <br><br>
 		  Comment:<br>
 		  <input type="text" name="commentReview"><br>
+		
+			</p><br>
+			<input type="submit" value="Submit">
 		</form>
-	</p><br>
-	<a href = "mainMenu">Submit</a>
 <br>
 <br>
 	<br>
