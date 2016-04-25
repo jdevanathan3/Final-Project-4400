@@ -25,6 +25,14 @@ class UpdateReservationController extends Controller
         $reservationID = $request->query->get('reservationID');
         $error = $request->query->get('error');
         $tickets = $this->db_getTickets($reservationID);
+        $today = date('Y-m-d');
+        for($i = 0; $i < count($tickets); $i++) {
+            if($tickets[$i]['date'] == $today) {
+                $tickets[$i]['disabled'] = 'true';
+            } else {
+                $tickets[$i]['disabled'] = 'false';
+            }
+        }
         $html = $this->container->get('templating')->render('reservation/updateReservation_select.html.twig', array("tickets" => $tickets, "reservationID" => $reservationID, "error" => $error));
         return new Response($html);
     }

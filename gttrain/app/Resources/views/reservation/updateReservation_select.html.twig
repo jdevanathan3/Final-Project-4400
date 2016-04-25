@@ -29,7 +29,7 @@
 					<tbody>
 					{% for ticket in tickets %}
 					<tr>
-						<td><div class="radio"><label><input type="radio" name="trainNumberRadio" id="blankRadio1" value="{{ ticket.trainNumber }}"></label></div></td>
+						<td>{% if ticket.disabled == "false" %}<div class="radio"><label><input type="radio" name="trainNumberRadio" id="blankRadio1" value="{{ ticket.trainNumber }}"></label></div>{% endif %}</td>
 						<td>{{ ticket.trainNumber }}</td>
 						<td>{{ ticket.duration }}</td>
 						<td>{{ ticket.departsFrom }}</td>
