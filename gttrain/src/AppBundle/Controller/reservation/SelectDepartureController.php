@@ -88,7 +88,7 @@ On Train_Route.Train_Number = Total.Train_Number";
             ->fetch_assoc()['Card'];
         var_dump($card);
         $query = "INSERT INTO `Reservation` (`ReservationID`, `Card_Number`, `Username`, `IsCancelled`, `Price`, `ReserveDate`, `CancelDate`) VALUES ('".$maxID."',
-         '".$card."', '".$user."', '0', '0', NOW(), NULL)";
+         NULL, '".$user."', '0', '0', NOW(), NULL)";
         $db->query($query);
         return $maxID;
     }

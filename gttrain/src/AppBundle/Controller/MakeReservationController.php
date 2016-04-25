@@ -151,8 +151,11 @@ WHere Stop.Train_Number = '".$trainNumber."'")->fetch_assoc()['Cost'];
     private function getCards($user) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $query = "Select Card_Number as Card From Payment_Info Where Username Like '".$user."'";
-        $cards = $db->query($query)->fetch_all();
-        return $cards;
+        $cards = $db->query($query);
+        if ($cards->num_rows < 1) {
+            return [];
+        }
+        return $cards->fetch_all();
     }
 
     private function updateTotalCost($totalCost, $reservationId) {
