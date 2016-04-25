@@ -148,9 +148,9 @@ On Stop.Train_Number Like OtherStops.Train_Number
 Where 
 (Stop.Train_Number = '".$trainNumber."') AND
 (Stop.Name != OtherStops.Name) AND
-(Stop.Name Like '".$startStation ."') AND
+(Stop.Name = '".$startStation ."') AND
 (Stop.Departure_Time is not null) AND
-(OtherStops.Name Like '". $endStation . "') AND
+(OtherStops.Name = '". $endStation . "') AND
 (OtherStops.Arrival_Time is not null)
 Group BY Stop.Train_Number
 ) As Total
@@ -172,7 +172,7 @@ On Train_Route.Train_Number = Total.Train_Number";
         $trainCost = $db->query("Select DISTINCT Train_Route.".$classText." As Cost From Stop JOIN
 Train_Route ON
 Stop.Train_Number Like Train_Route.Train_Number
-WHere Stop.Train_Number Like ".$trainNumber)->fetch_assoc()['Cost'];
+WHere Stop.Train_Number Like '".$trainNumber."'")->fetch_assoc()['Cost'];
         $trainCost = floatval($trainCost);
         return $trainCost;
     }
