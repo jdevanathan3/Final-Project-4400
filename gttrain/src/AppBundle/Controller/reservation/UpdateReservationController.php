@@ -198,23 +198,6 @@ WHere Stop.Train_Number = '".$trainNumber."'")->fetch_assoc()['Cost'];
         return $trainCost;
     }
 
-    private function calculateTotalPrice($user, $trainPrices, $extraBags) {
-        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $isStudent = $db->query("Select isStudent From User Where Username Like '".$user."'")->fetch_assoc()['isStudent'];
-        $total = $trainPrices + $extraBags * 30.00;
-        if ($isStudent === '1') {
-            $total *= 0.8;
-        }
-        return $total;
-    }
-
-    private function getCards($user) {
-        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $query = "Select Card_Number as Card From Payment_Info Where Username Like '".$user."'";
-        $cards = $db->query($query)->fetch_all();
-        return $cards;
-    }
-
     private function updateTotalCost($totalCost, $reservationId) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $query = "UPDATE `Reservation` SET `Price` = '".$totalCost."' WHERE `Reservation`.`ReservationID` = ".$reservationId;
@@ -224,18 +207,6 @@ WHere Stop.Train_Number = '".$trainNumber."'")->fetch_assoc()['Cost'];
     private function updateTicketDate($reservationID, $trainNumber, $newDate) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $query = "UPDATE `Reserves` SET `Departure_Date` = '". $newDate ."' WHERE `Reserves`.`ReservationID`='". $reservationID ."' AND `Reserves`.`Train_Number`='". $trainNumber ."'";
-        $db->query($query);
-    }
-
-    private function removeReserves($trainNumber, $reservationId) {
-        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId." AND `Reserves`.`Train_Number` = ".$trainNumber;
-        $db->query($query);
-    }
-
-    private function updateCardNumber($cardNumber, $reservation) {
-        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $query = "UPDATE `Reservation` SET `Card_Number` = '".$cardNumber."' WHERE `Reservation`.`ReservationID` = ".$reservation;
         $db->query($query);
     }
 }

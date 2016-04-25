@@ -30,5 +30,10 @@ security:
         - { path: ^/reservation, roles: ROLE_USER }
         - { path: ^/train, roles: ROLE_USER }
         - { path: ^/review, roles: ROLE_USER }
+        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/makeReservation, roles: ROLE_USER }
+        - { path: ^/paymentInfo, roles: ROLE_USER }
+        - { path: ^/confirmation, roles: ROLE_USER }
+        - { path: ^/addSchoolInfo, roles: ROLE_USER }
         - { path: ^/manager, roles: ROLE_MANAGER }
 
