@@ -31,6 +31,7 @@ security:
         - { path: ^/train, roles: ROLE_USER }
         - { path: ^/review, roles: ROLE_USER }
         - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/cancelReservationSearch, roles: ROLE_USER }
         - { path: ^/makeReservation, roles: ROLE_USER }
         - { path: ^/paymentInfo, roles: ROLE_USER }
         - { path: ^/confirmation, roles: ROLE_USER }
