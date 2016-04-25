@@ -29,8 +29,9 @@ class RegistrationController extends Controller
         $username = $request->request->get('input_username');
         $email = $request->request->get('input_email');
         $password = $request->request->get('input_password');
+        $password2 = $request->request->get('input_password_2');
 
-        $error_array = $this->findErrors($username, $email, $password);
+        $error_array = $this->findErrors($username, $email, $password, $password2);
 
         if(count($error_array) == 0) {
             $this->db_insertUser($username, $password, $email);
@@ -39,18 +40,11 @@ class RegistrationController extends Controller
         } else {
             $error_array['prev_username'] = $username;
             $error_array['prev_email'] = $email;
-            $error_array['prev_password'] = $password;
             $html = $this->container->get('templating')->render(
                 'auth/register.html.twig', $error_array
             );
             return new Response($html);
         }
-    }
-
-    private function db_getUser($username) {
-        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $result = $db->query("SELECT * FROM User WHERE USERNAME='" . $username . "'");
-        return $result->fetch_assoc();
     }
 
     private function db_isUsernameInDB($username) {
@@ -72,7 +66,7 @@ class RegistrationController extends Controller
         $db->query("INSERT INTO User (Username, Password, Email) VALUES ('" . $username . "','". $password . "','" . $email . "')");
     }
 
-    private function findErrors($username, $email, $password) {
+    private function findErrors($username, $email, $password, $password2) {
         $error_array = [];
 
         // if username is empty
@@ -99,6 +93,17 @@ class RegistrationController extends Controller
         if($password == NULL) {
             $error_array['PASSWORD_EMPTY'] = true;
         }
+
+        // if password2 is empty
+        if($password2 == NULL) {
+            $error_array['PASSWORD_2_EMPTY'] = true;
+        }
+
+        // if passwords don't match
+        if($password != $password2) {
+            $error_array['PASSWORD_MATCH'] = true;
+        }
+
 
         return $error_array;
     }

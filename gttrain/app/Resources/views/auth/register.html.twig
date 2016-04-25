@@ -24,9 +24,15 @@
                             {% if EMAIL_INVALID is defined %}<span id="helpBlock3" class="help-block">Email is invalid. Please enter a valid Email</span>{% endif %}
                             {% if EMAIL_TAKEN is defined %}<span id="helpBlock4" class="help-block">Email is taken. Please choose a different Email</span>{% endif %}
                         </div>
-                        <div class="form-group{% if PASSWORD_EMPTY is defined %} has-error{% endif %}">
+                        <div class="form-group{% if PASSWORD_EMPTY is defined or PASSWORD_MATCH is defined %} has-error{% endif %}">
                             <input type="password" class="form-control" name="input_password" id="input_password" placeholder="Password">
                             {% if PASSWORD_EMPTY is defined %}<span id="helpBlock6" class="help-block">Password is empty. Please enter a Password</span>{% endif %}
+                            {% if PASSWORD_MATCH is defined %}<span id="helpBlock6" class="help-block">Passwords do not match.</span>{% endif %}
+                        </div>
+                        <div class="form-group{% if PASSWORD_2_EMPTY is defined or PASSWORD_MATCH is defined %} has-error{% endif %}">
+                            <input type="password" class="form-control" name="input_password_2" id="input_password_2" placeholder="Password">
+                            {% if PASSWORD_2_EMPTY is defined %}<span id="helpBlock6" class="help-block">Password Confirmation is empty. Please re-enter your password</span>{% endif %}
+                            {% if PASSWORD_MATCH is defined %}<span id="helpBlock6" class="help-block">Passwords do not match.</span>{% endif %}
                         </div>
                         <button type="submit" class="btn btn-default">Submit</button>
                     </form>
