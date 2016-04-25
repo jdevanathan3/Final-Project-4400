@@ -57,7 +57,7 @@ class CancelReservationController extends Controller
             }
         }
         $refundAmount = 0.0;
-        $totalCost = $this->calculateTotalPrice($user, $totalPrice, $totalExtraBags);
+        $totalCost = $this->getCurrentPrice($reservationId);
         $currentDate = $this->getCurrenetDate();
         $difference = intval($this->getDateDifference($reservationDate));
         switch($difference) {
@@ -207,6 +207,14 @@ WHere Stop.Train_Number Like '".$trainNumber."'")->fetch_assoc()['Cost'];
         $db->query($query);
         $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId;
         $db->query($query);
+    }
+
+    private function getCurrentPrice($reservationId) {
+        $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
+        $cancelDate = $this->getCurrenetDate();
+        $query = "SELECT Price FROM Reservation Where ReservationID = ".$reservationId;
+        $price = $db->query($query)->fetch_assoc()['Price'];
+        return $price;
     }
 }
 
