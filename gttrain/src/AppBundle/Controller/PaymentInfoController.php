@@ -172,7 +172,7 @@ class PaymentInfoController extends Controller
         if($cardExpDate == NULL) {
             $error_array['CARDEXPDATE_INVALID'] = true;
         } else {
-	    if($cardExpDate->getTimestamp() <= (time() - 60*60*24)) { 
+	    if($cardExpDate->getTimestamp() <= (time() - 60*60*24) || !preg_match("/^((0[1-9])|(1[0-2]))\/((2009)|(20[1-2][0-9]))$/", $cardExpDate, $output_array)) {
 	        $error_array['CARDEXPDATE_INVALID'] = true;	    
 	    } 
 	}
