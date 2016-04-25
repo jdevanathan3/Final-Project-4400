@@ -146,7 +146,7 @@ FROM Stop
 Inner Join Stop as OtherStops
 On Stop.Train_Number Like OtherStops.Train_Number
 Where 
-(Stop.Train_Number = ".$trainNumber.") AND
+(Stop.Train_Number = '".$trainNumber."') AND
 (Stop.Name != OtherStops.Name) AND
 (Stop.Name Like '".$startStation ."') AND
 (Stop.Departure_Time is not null) AND

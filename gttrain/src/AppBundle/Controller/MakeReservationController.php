@@ -108,7 +108,7 @@ FROM Stop
 Inner Join Stop as OtherStops
 On Stop.Train_Number = OtherStops.Train_Number
 Where 
-(Stop.Train_Number = ".$trainNumber.") AND
+(Stop.Train_Number = '".$trainNumber."') AND
 (Stop.Name != OtherStops.Name) AND
 (Stop.Name Like '".$startStation ."') AND
 (Stop.Departure_Time is not null) AND
@@ -118,6 +118,7 @@ Group BY Stop.Train_Number
 ) As Total
 Join Train_Route
 On Train_Route.Train_Number = Total.Train_Number";
+        var_dump($query);
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $result = $db->query($query);
         return $result->fetch_assoc();
