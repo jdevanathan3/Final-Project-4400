@@ -20,15 +20,16 @@ class CancelReservationController extends Controller
      */
     public function showReservation(Request $request)
     {
+        $user = $this->get('security.token_storage')->getToken()->getUser();
         $reservationId = $request->query->get('RIDCancellation');
-        $reservationDate = $this->getReservation($reservationId);
+        $reservationDate = $this->getReservation($reservationId, $user);
         if ($reservationDate == NULL) {
             return $this->redirectToRoute('cancelError',
                 [],
                 302);
         }
 
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+
         $info = $this->getTickets($reservationId);
         $totalExtraBags = 0;
         $totalPrice = 0.0;
@@ -107,14 +108,14 @@ class CancelReservationController extends Controller
         return new Response($html);
     }
 
-    private function getReservation($reservationId) {
+    private function getReservation($reservationId, $user) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $query = "Select * From
 (
 Select Min(Reserves.Departure_Date) as EarliestDeparture From Reservation
 Join Reserves
 On Reservation.ReservationID = Reserves.ReservationID
-Where Reservation.ReservationID = ".$reservationId." AND Reservation.IsCancelled = 0
+Where Reservation.ReservationID = ".$reservationId." AND Reservation.IsCancelled = 0 AND Reservation.Username = '".$user."'
     ) T
 Where DATE_SUB(T.EarliestDeparture, INTERVAL 1 DAY) >= NOW()";
         $date = $db->query($query);
