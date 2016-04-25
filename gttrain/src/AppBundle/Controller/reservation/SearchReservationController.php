@@ -54,7 +54,6 @@ class SearchReservationController extends Controller
             if($reservationInfo == NULL) {
                 $errorArray['RESERVATION_INVALID'] =  true;
             }
-            dump($reservationInfo);
             if($reservationInfo != NULL && $reservationInfo[0][3] == 1) {
                 $errorArray['RESERVATION_CANCELLED'] =  true;
             }

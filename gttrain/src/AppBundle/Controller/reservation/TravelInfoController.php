@@ -51,7 +51,6 @@ class TravelInfoController extends Controller
         $reservationId = $_SESSION['reservationId'];
         $departStation = $request->request->get('departStation');
         $arriveStation = $request->request->get('arriveStation');
-        var_dump($departStation);
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $query = "INSERT INTO `Reserves` (`ReservationID`, `Train_Number`, `Class`, `Departure_Date`, `Passenger_Name`, `Number_Bags`, `Departs_From`, `Arrives_At`) 
         VALUES ('".$reservationId."', '".$trainNumber."', '".$trainClass."', '".$date."', '".$passengerName."',

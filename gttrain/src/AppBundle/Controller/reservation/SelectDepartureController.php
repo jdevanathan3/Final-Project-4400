@@ -44,7 +44,6 @@ class SelectDepartureController extends Controller
         $date = $dataSplit[2];
         if (!isset($_SESSION['reservationId']))
         {
-            var_dump("this runs");
             $reservationId = $this->createReservation();
             $_SESSION['reservationId'] = $reservationId;
         }
@@ -86,7 +85,6 @@ On Train_Route.Train_Number = Total.Train_Number";
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $card = $db->query("SELECT Payment_Info.Card_Number as Card FROM `Payment_Info` WHERE Payment_Info.Username Like '".$user."' Limit 1")
             ->fetch_assoc()['Card'];
-        var_dump($card);
         $query = "INSERT INTO `Reservation` (`ReservationID`, `Card_Number`, `Username`, `IsCancelled`, `Price`, `ReserveDate`, `CancelDate`) VALUES ('".$maxID."',
          NULL, '".$user."', '0', '0', NOW(), NULL)";
         $db->query($query);
