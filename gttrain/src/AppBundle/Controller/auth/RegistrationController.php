@@ -100,7 +100,7 @@ class RegistrationController extends Controller
         }
 
         // if passwords don't match
-        if($password != $password2) {
+        if($password != NULL && $password2 != NULL && $password != $password2) {
             $error_array['PASSWORD_MATCH'] = true;
         }
 
