@@ -89,7 +89,7 @@ class CancelReservationController extends Controller
         $refundAmount = floatval($request->request->get('refundAmount'));
         $price = $totalAmount - $refundAmount;
         $this->deleteReservation($reservationId, $price);
-        return $this->redirectToRoute('/user/dashboard',
+        return $this->redirectToRoute('userDashboard',
             [],
             302);
     }
