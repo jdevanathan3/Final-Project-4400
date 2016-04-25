@@ -49,7 +49,7 @@ class TrainScheduleController extends Controller
 
     private function getTrainSchedule($trainNumber) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $result = $db->query("SELECT Train_Route.Train_Number, Arrival_Time, Departure_Time, Name FROM Train_Route INNER JOIN Stop ON Train_Route.Train_Number=Stop.Train_Number WHERE Train_Route.Train_Number=" . $trainNumber . " ORDER BY Arrival_Time");
+        $result = $db->query("SELECT Train_Route.Train_Number, Arrival_Time, Departure_Time, Name FROM Train_Route INNER JOIN Stop ON Train_Route.Train_Number=Stop.Train_Number WHERE Train_Route.Train_Number='" . $trainNumber . "' ORDER BY Arrival_Time");
         return $result->fetch_all();
     }
 }

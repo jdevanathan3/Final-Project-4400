@@ -163,7 +163,7 @@ WHere Stop.Train_Number = '".$trainNumber."'")->fetch_assoc()['Cost'];
 
     private function removeReserves($trainNumber, $reservationId) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId." AND `Reserves`.`Train_Number` = ".$trainNumber;
+        $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId." AND `Reserves`.`Train_Number` = '".$trainNumber."'";
         $db->query($query);
     }
 
