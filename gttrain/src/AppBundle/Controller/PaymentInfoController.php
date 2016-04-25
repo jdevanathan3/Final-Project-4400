@@ -81,20 +81,21 @@ class PaymentInfoController extends Controller
         $date->setDate($year, $month, 1);
 	$error_array = $this -> findErrors($cardName,$cardNumber, $cardCVV, $date);
 	if(count($error_array) == 0) {
-	    $this -> db_insertCard($cardNumber, $cardCVV, $date, $cardName);
-	    $cards = $this -> populateCardSelect();
-	    $args = array("error"=>$error_array, "cards"=>$cards);
-            $html = $this->container->get('templating')->render(
+	    if(!$this -> db_insertCard($cardNumber, $cardCVV, $date, $cardName)) {
+	        $cards = $this -> populateCardSelect();
+	        $args = array("error"=>$error_array, "cards"=>$cards);
+                $html = $this->container->get('templating')->render(
                 'paymentInfo.html.twig',
-                $args 
-            );
-	} else {
-	    $args = array("error"=>$error_array, "cards"=>$cards);
-            $html = $this->container->get('templating')->render(
-                'paymentInfo.html.twig', $args
-            );
-            return $this->redirectToRoute('makeReservation');
-        }
+                $args);
+		$error_array['PAYMENT_FAILED'] = true;
+	    } else {
+                return $this->redirectToRoute('makeReservation');
+	    }
+	}
+	$args = array("error"=>$error_array, "cards"=>$cards);
+        $html = $this->container->get('templating')->render(
+            'paymentInfo.html.twig', $args
+        );
         return new Response($html);
     }
 
@@ -108,14 +109,27 @@ class PaymentInfoController extends Controller
     private function db_insertCard($cardNumber, $cardCVV, $date, $cardName) {
          $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
          $user = $this->get('security.token_storage')->getToken()->getUser();
-	 $db->query("INSERT INTO Payment_Info (Card_Number, Username, CVV, Exp_Date, nameOnCard) VALUES ('" . $cardNumber . "','" . $user . "','" . $cardCVV . "','" . $date->format('Y-m-d H:i:s')
+
+	 $existingCards = $db->query("SELECT * FROM Payment_Info WHERE Card_Number = '" . $cardNumber . "'"); 
+	 if($existingCards->num_rows > 0) {
+		 return false;
+	 } 
+
+	 return $db->query("INSERT INTO Payment_Info (Card_Number, Username, CVV, Exp_Date, nameOnCard) VALUES ('" . $cardNumber . "','" . $user . "','" . $cardCVV . "','" . $date->format('Y-m-d H:i:s')
 		    . "','" . $cardName . "')");
     }
 
     private function db_deleteCard($cardNumber) {
          $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
          $user = $this->get('security.token_storage')->getToken()->getUser();
-	 $existingCards = $db->query("SELECT * FROM Reservation WHERE Card_Number='" . $cardNumber . "' AND Username='" . $user . "'");
+	 //$existingCards = $db->query("SELECT * FROM Reservation WHERE Card_Number='" . $cardNumber . "' AND Username='" . $user . "'");
+	$existingCards = $db->query("Select * From(
+	Select Reservation.Card_Number, Max(Reserves.Departure_Date) as LatestDeparture From Reservation
+	Join Reserves 
+	On Reservation.ReservationID = Reserves.ReservationID
+	Where Reservation.Card_Number = '" . $cardNumber  ."'
+	GROUP By Reservation.ReservationID) Cards
+	Where Cards.LatestDeparture > NOW()");
 	 //var_dump($existingCards);
 	 if($existingCards->num_rows == 0) {
 	     $dopeness = $db->query("DELETE FROM Payment_Info WHERE Card_Number='" . $cardNumber . "' AND Username='" . $user . "'"); 
@@ -131,6 +145,7 @@ class PaymentInfoController extends Controller
 	if(!$this -> db_deleteCard($cardNumber)) {
 		$error_array['DELETE_CARD_FAILED'] = true;
 	}
+        //var_dump($error_array);
         return $error_array;
     }
 
