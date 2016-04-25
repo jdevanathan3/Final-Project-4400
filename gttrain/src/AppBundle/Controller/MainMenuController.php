@@ -17,6 +17,10 @@ class MainMenuController extends Controller
             'mainMenu.html.twig',
             array('luckyNumberList' => 1)
         );
+        if (isset($_SESSION['reservationId'])) {
+            $variable = $_SESSION['reservationId'];
+            unset($_SESSION['reservationId'], $variable);
+        }
         return new Response($html);
     }
 }

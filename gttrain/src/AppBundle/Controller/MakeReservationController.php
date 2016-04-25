@@ -108,11 +108,11 @@ FROM Stop
 Inner Join Stop as OtherStops
 On Stop.Train_Number = OtherStops.Train_Number
 Where 
-(Stop.Train_Number = ".$trainNumber.") AND
+(Stop.Train_Number = '".$trainNumber."') AND
 (Stop.Name != OtherStops.Name) AND
-(Stop.Name Like '".$startStation ."') AND
+(Stop.Name = '".$startStation ."') AND
 (Stop.Departure_Time is not null) AND
-(OtherStops.Name Like '". $endStation . "') AND
+(OtherStops.Name = '". $endStation . "') AND
 (OtherStops.Arrival_Time is not null)
 Group BY Stop.Train_Number
 ) As Total
@@ -124,8 +124,7 @@ On Train_Route.Train_Number = Total.Train_Number";
     }
 
     private function getPrice($trainNumber, $class){
-        $classText = "";
-        if ($class === "1") {
+        if ($class == "1") {
             $classText = "1st_Class_price";
         } else {
             $classText = "2nd_Class_price";
@@ -134,7 +133,7 @@ On Train_Route.Train_Number = Total.Train_Number";
         $trainCost = $db->query("Select DISTINCT Train_Route.".$classText." As Cost From Stop JOIN
 Train_Route ON
 Stop.Train_Number = Train_Route.Train_Number
-WHere Stop.Train_Number = ".$trainNumber)->fetch_assoc()['Cost'];
+WHere Stop.Train_Number = '".$trainNumber."'")->fetch_assoc()['Cost'];
         $trainCost = floatval($trainCost);
         return $trainCost;
     }
@@ -152,8 +151,11 @@ WHere Stop.Train_Number = ".$trainNumber)->fetch_assoc()['Cost'];
     private function getCards($user) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $query = "Select Card_Number as Card From Payment_Info Where Username Like '".$user."'";
-        $cards = $db->query($query)->fetch_all();
-        return $cards;
+        $cards = $db->query($query);
+        if ($cards->num_rows < 1) {
+            return [];
+        }
+        return $cards->fetch_all();
     }
 
     private function updateTotalCost($totalCost, $reservationId) {
@@ -164,7 +166,7 @@ WHere Stop.Train_Number = ".$trainNumber)->fetch_assoc()['Cost'];
 
     private function removeReserves($trainNumber, $reservationId) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId." AND `Reserves`.`Train_Number` = ".$trainNumber;
+        $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId." AND `Reserves`.`Train_Number` = '".$trainNumber."'";
         $db->query($query);
     }
 

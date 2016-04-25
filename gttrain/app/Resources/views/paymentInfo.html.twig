@@ -33,7 +33,7 @@
 	
 	<br>
 	<h3>Delete Card</h3>
-        {% if error.DELETE_CARD_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error!</strong>Could not delete card</div>{% endif %}
+        {% if error.DELETE_CARD_FAILED is defined %}<div class="alert alert-danger" role="alert"><strong>Error! </strong>Could not delete card - it is currently in use for a pending transaction.</div>{% endif %}
         <form method = "post" action="getDeleteInfo"> 
 	<p>
 		Card Number:

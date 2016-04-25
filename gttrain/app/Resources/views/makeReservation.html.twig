@@ -54,7 +54,7 @@
 		<p>
 			<a style="font-size:12px" href = "/reservation/searchTrain">Continue Adding a Train</a>
 		</p>
-		<button type="submit" class="btn btn-default">Submit</button >
+		<button type="submit" class="btn btn-default" {% if cards|length < 1 %} disabled{% endif %}>Submit</button >
 	</form>
 <br>
 <br>
