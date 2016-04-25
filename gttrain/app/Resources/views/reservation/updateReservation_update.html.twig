@@ -1,66 +1,119 @@
-{# app/Resources/views/login.html.twig #}
-{% extends 'base.loggedIn.html.twig' %}
+{% extends 'base/base.loggedIn.html.twig' %}
 
 {% block title %}
-    Update Reservation 
+	Update Reservation
+{% endblock %}
+
+{% block stylesheets %}
+	<link href="{{ asset('css/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
-  <h1>Update Reservation</h1>
+	<div class="row">
+		<div class="col-md-12"><h1>Update Reservation {{ reservationID }}</h1></div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<li><a href="/user/dashboard">User</a></li>
+				<li></li>Reservation</a></li>
+				<li class="active">Update</li>
+			</ol>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<h3>Old Ticket</h3>
+			<table class="table table-bordered">
+				<thead>
+				<tr><th>Train</th><th>Date</th><th>Departs from</th><th>Arrives at</th><th>Class</th><th>Price</th><th># of Bags</th><th>Passenger name</th></tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ ticket.trainNumber }}</td>
+						<td>{{ ticket.date }}</td>
+						<td>{{ ticket.departsFrom }}</td>
+						<td>{{ ticket.arrivesAt }}</td>
+						<td>{{ ticket.class }}</td>
+						<td>{{ ticket.price }}</td>
+						<td>{{ ticket.bags }}</td>
+						<td>{{ ticket.passenger }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 
-         <table stBackyla="width:100%">
-         <form>		 
-	  <tr>
-	    <th>Train(Train Number)
-	    <th>Time(Duration)
-	    <th>Departs From
-	    <th>Arrives At
-	    <th>Class
-	    <th>Price
-	    <th>#of Baggages
-	    <th>Passenger Name
-	  <tr>
-	    <td><input type = "radio" name="select" value = "1"></td>
-	    <td>Jill</td>
-	    <td>Smith</td> 
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	  </tr>
-	  <tr>
-	    <td><input type = "radio" name="select" value = "1"></td>
-	    <td>Eve</td>
-	    <td>Jackson</td> 
-	    <td>94</td>
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	    <td>50</td>
-	  </tr>
-	</table>
-	 New Departure Date:<input type="text" name="departDate">
-	 <input type="submit" value="Search Availability">
-	 <!--Need to add new table here using PHP if there are availabilities.-->
+	<div class="row">
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Details</h3>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" action="/reservation/update" method="post">
+						<div class="form-group">
+							<label for="input_date" class="col-sm-4 control-label">Departure Date</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="input_date" name="input_date" placeholder="text" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="out_oldTotal" class="col-sm-4 control-label">Old Total Cost</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="out_oldTotal" placeholder="stuff 1" value="{{ totalCost }}" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="out_changeFee" class="col-sm-4 control-label">Change Fee</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="out_changeFee" placeholder="stuff 1" value="{{ changeFee }}" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="out_newTotal" class="col-sm-4 control-label">New Total Cost</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="out_newTotal" name="out_newTotal" placeholder="stuff 2" value="{{ newTotalCost }}" readonly>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-offset-4 col-sm-8">
+								<input type="hidden" name="out_reservationID" value="{{ reservationID }}">
+								<input type="hidden" name="out_trainNumber" value="{{ trainNumber }}">
+								<button type="submit" class="btn btn-default">Edit</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">Date</h3>
+				</div>
+				<div class="panel-body">
+					<div id="datepicker"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
 
-         <table stBackyla="width:100%">
-	  <tr>
-	    <th>Train(Train Number)
-	    <th>Time(Duration)
-	    <th>Departs From
-	    <th>Arrives At
-	    <th>Class
-	    <th>Price
-	    <th>#of Baggages
-	    <th>Passenger Name
-        </table>
-	<button type = "button" onclick="location.href='select'">
-	Back</button>
-	<button type = "button" onclick="location.href='/mainMenu'">
-	Submit</button>
-       
-         </form>
+{% block scripts %}
+	<script src="{{ asset('js/moment.min.js') }}"></script>
+	<script src="{{ asset('js/bootstrap-datepicker.min.js') }}"></script>
+	<script>
+		$('#input_date').val(moment('{{ ticket.date }}').format('YYYY-MM-DD'));
+		$('#datepicker').datepicker({
+			format: 'yyyy-mm-dd',
+			todayHighlight: true,
+			startDate: '0d'
+		});
+		$('#datepicker').on("changeDate", function() {
+			$('#input_date').val(
+					$('#datepicker').datepicker('getFormattedDate')
+			);
+		});
+	</script>
 {% endblock %}
