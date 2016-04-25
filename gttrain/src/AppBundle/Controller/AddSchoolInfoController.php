@@ -39,7 +39,7 @@ class AddSchoolInfoController extends Controller
         $isValid = preg_match("/(\S)+.(edu)/", $email, $matches);
 	if($isValid) {
 	    //search db for user
-	    var_dump( $this->get('security.token_storage')->getToken()->getUser());
+	    //var_dump( $this->get('security.token_storage')->getToken()->getUser());
 	    //update user's isStudent field 
 	    $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
             $db->query("UPDATE User SET isStudent = 1 WHERE Username='" . $this->get('security.token_storage')->getToken()->getUser() . "'"); 

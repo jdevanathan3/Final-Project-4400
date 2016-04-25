@@ -59,7 +59,9 @@ class PaymentInfoController extends Controller
             'paymentInfo.html.twig',
            $args 
         );
-
+	if(count($error_array) == 0) {
+            return $this->redirectToRoute('makeReservation');
+	}
         return new Response($html);
     }
 
@@ -91,6 +93,7 @@ class PaymentInfoController extends Controller
             $html = $this->container->get('templating')->render(
                 'paymentInfo.html.twig', $args
             );
+            return $this->redirectToRoute('makeReservation');
         }
         return new Response($html);
     }
