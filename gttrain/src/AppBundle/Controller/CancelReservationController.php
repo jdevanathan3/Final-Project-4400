@@ -67,6 +67,9 @@ class CancelReservationController extends Controller
                 $refundAmount = $totalCost * 0.5 - 50;
                 break;
         }
+        if ($refundAmount < 0) {
+            $refundAmount = 0;
+        }
         $html = $this->container->get('templating')->render(
             'cancelReservation.html.twig',
             array('tickets' => $tickets, 'totalCost' => $totalCost, 'currentDate' => $currentDate, 'totalCost' =>$totalCost,
