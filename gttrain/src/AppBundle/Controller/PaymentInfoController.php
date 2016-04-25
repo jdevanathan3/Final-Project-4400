@@ -158,12 +158,12 @@ class PaymentInfoController extends Controller
         }
         
         // if cardNumber is invalid 
-        if($cardNumber == NULL || !preg_match("/(\d){16}/", $cardNumber, $output_array)) {
+        if($cardNumber == NULL || !preg_match("/^[0-9]{16}$/", $cardNumber, $output_array)) {
             $error_array['CARDNUMBER_INVALID'] = true;
         }
 
         // if cardCVV is invalid 
-        if($cardCVV == NULL || !preg_match("/(\d){3}/", $cardCVV, $output_array)) {
+        if($cardCVV == NULL || !preg_match("/^[0-9]{3}$/", $cardCVV, $output_array)) {
             $error_array['CARDCVV_INVALID'] = true;
         }
         
