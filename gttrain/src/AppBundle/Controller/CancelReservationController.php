@@ -198,7 +198,7 @@ WHere Stop.Train_Number Like ".$trainNumber)->fetch_assoc()['Cost'];
 
     private function deleteReservation($reservationId, $price) {
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
-        $query = "UPDATE `Reservation` SET `IsCancelled` = '1', `Price` = '".$price."' WHERE `Reservation`.`ReservationID` = ".$reservationId;
+        $query = "UPDATE `Reservation` SET `IsCancelled` = '1', `Price` = '".$price."', `CancelDate` = 'NOW()' WHERE `Reservation`.`ReservationID` = ".$reservationId;
         $db->query($query);
         $query = "DELETE FROM `Reserves` WHERE `Reserves`.`ReservationID` = ".$reservationId;
         $db->query($query);
