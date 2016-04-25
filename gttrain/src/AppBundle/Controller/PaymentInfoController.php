@@ -75,12 +75,12 @@ class PaymentInfoController extends Controller
 	$cardNumber = $request->request->get('cardNumber');
 	$cardCVV = $request->request->get('cardCVV');
 	$cardExpDate = $request->request->get('cardExpDate');
-        $date = new DateTime();
-	$month = intval(strtok($cardExpDate, "/"));
-	$year = intval(strtok("/"));
-        $date->setDate($year, $month, 1);
-	$error_array = $this -> findErrors($cardName,$cardNumber, $cardCVV, $date);
+	$error_array = $this -> findErrors($cardName,$cardNumber, $cardCVV, $cardExpDate);
 	if(count($error_array) == 0) {
+            $date = new DateTime();
+	    $month = intval(strtok($cardExpDate, "/"));
+	    $year = intval(strtok("/"));
+            $date->setDate($year, $month, 1);
 	    if(!$this -> db_insertCard($cardNumber, $cardCVV, $date, $cardName)) {
 	        $cards = $this -> populateCardSelect();
 	        $args = array("error"=>$error_array, "cards"=>$cards);
@@ -172,7 +172,11 @@ class PaymentInfoController extends Controller
         if($cardExpDate == NULL) {
             $error_array['CARDEXPDATE_INVALID'] = true;
         } else {
-	    if($cardExpDate->getTimestamp() <= (time() - 60*60*24)) { 
+            $date = new DateTime();
+	    $month = intval(strtok($cardExpDate, "/"));
+	    $year = intval(strtok("/"));
+            $date->setDate($year, $month, 1);
+	    if($date->getTimestamp() <= (time() - 60*60*24) || !preg_match("/^((0[1-9])|(1[0-2]))\/((2009)|(20[1-2][0-9]))$/", $cardExpDate, $output_array)) {
 	        $error_array['CARDEXPDATE_INVALID'] = true;	    
 	    } 
 	}
