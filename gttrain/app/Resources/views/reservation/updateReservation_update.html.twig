@@ -107,7 +107,7 @@
 		$('#input_date').val(moment('{{ ticket.date }}').format('YYYY-MM-DD'));
 		$('#datepicker').datepicker({
 			format: 'yyyy-mm-dd',
-			startDate: '+0d'
+			startDate: '+1d'
 		});
 		$('#datepicker').on("changeDate", function() {
 			$('#input_date').val(
