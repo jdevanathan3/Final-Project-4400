@@ -118,7 +118,6 @@ Group BY Stop.Train_Number
 ) As Total
 Join Train_Route
 On Train_Route.Train_Number = Total.Train_Number";
-        var_dump($query);
         $db = new mysqli("emptystream.com", "cs4400_test", "happy stuff", "cs4400_test");
         $result = $db->query($query);
         return $result->fetch_assoc();
