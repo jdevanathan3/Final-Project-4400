@@ -57,7 +57,7 @@ class CancelReservationController extends Controller
             }
         }
         $refundAmount = 0.0;
-        $totalCost = $this->getCurrentPrice($reservationId);
+        $totalCost = floatval($this->getCurrentPrice($reservationId));
         $currentDate = $this->getCurrenetDate();
         $difference = intval($this->getDateDifference($reservationDate));
         switch($difference) {
