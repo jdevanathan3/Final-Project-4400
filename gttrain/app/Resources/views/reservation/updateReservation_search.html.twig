@@ -25,10 +25,11 @@
 				</div>
 				<div class="panel-body">
 					<form method = "post" action="/reservation/search">
-						<div class="form-group{% if RESERVATION_BLANK is defined or RESERVATION_INVALID is defined%} has-error{% endif %}">
+						<div class="form-group{% if RESERVATION_BLANK is defined or RESERVATION_INVALID is defined or RESERVATION_CANCELLED is defined %} has-error{% endif %}">
 							<input type="text" class="form-control" id="input_reservationNumber" name="input_reservationNumber" placeholder="Reservation Number">
 							{% if RESERVATION_BLANK is defined %}<span id="helpBlock1" class="help-block">Reservation ID is empty. Please enter a Reservation ID</span>{% endif %}
 							{% if RESERVATION_INVALID is defined %}<span id="helpBlock1" class="help-block">Reservation ID is invalid. Please enter another Reservation ID</span>{% endif %}
+							{% if RESERVATION_CANCELLED is defined %}<span id="helpBlock1" class="help-block">Reservation ID is cancelled. Please enter another Reservation ID</span>{% endif %}
 						</div>
 						<input type="submit" class="btn btn-default" value = "Search">
 					</form>

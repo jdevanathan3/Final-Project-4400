@@ -148,33 +148,6 @@ class UpdateReservationController extends Controller
         return $tickets;
     }
 
-    /**
-     * @Route("/makeReservation")
-     * @Method({"POST"})
-     */
-    public function processPost(Request $request) {
-        $cardNumber = $request->request->get('cardNumber');
-        $reservationId = $_SESSION['reservationId'];
-        $this->updateCardNumber($cardNumber, $reservationId);
-        return $this->redirectToRoute('confirmation',
-            [],
-            302);
-    }
-
-    /**
-     * @Route("/removeTicket")
-     * @Method({"POST"})
-     */
-    public function processRemovePost(Request $request) {
-        $trainNumber = $request->request->get('trainNumber');
-        $reservationId = $_SESSION['reservationId'];
-        $this->removeReserves($trainNumber, $reservationId);
-        return $this->redirectToRoute('makeReservation',
-            [],
-            302);
-    }
-
-
     private function getTickets($reservationId) {
         $query = "SELECT Reserves.Train_Number, Reserves.Departs_From as DepartsFrom, Reserves.Arrives_At as ArrivesAt, Reserves.Class,
 Reserves.Number_Bags as Bags, Reserves.Passenger_Name as Passenger, Reserves.Departure_Date FROM Reservation
